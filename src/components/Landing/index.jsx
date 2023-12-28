@@ -5,7 +5,6 @@ export default function Landing() {
         <>
             <div >
                 <ButtonLanding/>
-                Hola soy landing
             </div>
         </>
     )
