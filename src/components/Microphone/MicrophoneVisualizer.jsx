@@ -3,6 +3,10 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import microfono from '../../assets/mic.png';
 import WaveSurfer from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js';
 import RecordPlugin from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/record.esm.js';
+import { Button, Container, Row, Col, Form } from 'react-bootstrap'; // Import React Bootstrap components
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Transcription from '../Transcription/Transcription';
+
 
 const MicrophoneVisualizer = () => {
   const {
@@ -118,33 +122,50 @@ const MicrophoneVisualizer = () => {
   };
 
   return (
-    <div>
-      <div>
-        <h1>Home Page</h1>
-        <p>Transcription: {transcript}</p>
-        <p>Listening: {listening ? 'Yes' : 'No'}</p>
-
-        {recording && stream && <div style={{ width: '100%', height: '200px' }} id="waveform"></div>}
-        <button onClick={handleStart} disabled={listening}>
-          Start Listening
-        </button>
-        <button onClick={handleStop} disabled={!listening}>
-          Stop Listening
-        </button>
-        <button onClick={handleReset}>Reset Transcription</button>
-        <div id="waveform"></div>
-        {audioBlob && (
+    <Container>
+      <Row>
+        <Col>
           <div>
-            <audio controls src={URL.createObjectURL(audioBlob)} />
-            <a href={URL.createObjectURL(audioBlob)} download="recorded_audio.wav">
-              Download Audio
-            </a>
-          </div>
-        )}
-        <div id="recordings" style={{margin: "1rem 0"}}></div>
-      </div>
-      <img src={microfono} alt="Micrófono" style={{ width: '10%', height: 'auto' }} />
-    </div>
+            <h1>Home Page</h1>
+            
+            <p>Listening: {listening ? 'Yes' : 'No'}</p>
+
+            {recording && stream && <div style={{ width: '100%', height: '200px' }} id="waveform"></div>}
+            
+            <Button variant="primary" onClick={handleStart} disabled={listening}>
+              Start Listening
+              <img src={microfono} alt="Micrófono" style={{ width: '10%', height: 'auto' }} />
+            </Button>
+            
+            <Button variant="danger" onClick={handleStop} disabled={!listening}>
+              Stop Listening
+            </Button>
+            
+            <Button variant="warning" onClick={handleReset}>
+              Reset Transcription
+            </Button>
+            
+            <div id="waveform"></div>
+            
+            {audioBlob && (
+              <div>
+                <audio controls src={URL.createObjectURL(audioBlob)} />
+                <a href={URL.createObjectURL(audioBlob)} download="recorded_audio.wav">
+                  Download Audio
+                </a>
+              </div>
+            )}
+            
+            <div id="recordings" style={{ margin: '1rem 0' }}></div>
+          </div><Transcription textoTranscripcion={transcript}/>
+        </Col>
+        <Col>
+        {/* <p>Transcription: {transcript}</p> */}
+
+         
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
