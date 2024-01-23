@@ -126,7 +126,6 @@ const MicrophoneVisualizer = () => {
       <Row>
         <Col>
           <div>
-            <h1>Home Page</h1>
             
             <p>Listening: {listening ? 'Yes' : 'No'}</p>
 

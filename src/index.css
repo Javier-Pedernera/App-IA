@@ -10,7 +10,10 @@
   --color-primary-500: #3fb5e4;
   --color-primary-600: #446fb6;
   --color-primary-900: #F57F17;
-  --color-secondary-500: #ffff;
+  --color-background: #fefefa;
+  /* --color-secondary-600: #36312c; */
+  --color-secondary-600: #c7d55c;
+  --color-secondary-500: #fefefa;
   --color-secondary-900: #ffff;
   --font-primary: "Montserrat", sans-serif;
 }
