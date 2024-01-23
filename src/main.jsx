@@ -6,12 +6,14 @@ import App from './App.jsx'
 import './index.css'
 import Landing from './components/Landing/index.jsx'
 import 'regenerator-runtime/runtime'
+import Layout from './components/Layout/index.jsx';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     {/* <ThemeProvider> */}
       {/* <Provider store={store}> */}
         <RouterProvider router={router}>
-          <Landing />
+        <Layout/>
+          {/* <Landing /> */}
         </RouterProvider>
       {/* </Provider> */}
     {/* </ThemeProvider> */}
