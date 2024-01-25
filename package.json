@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.0.1",
+    "@xenova/transformers": "^2.14.0",
+    "axios": "^1.6.5",
     "bootstrap": "^5.3.2",
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",
@@ -24,7 +27,8 @@
     "react-sound-visualizer": "^1.1.1",
     "react-speech-recognition": "^3.10.0",
     "react-wavesurfer.js": "^0.0.8",
-    "regenerator-runtime": "^0.14.0"
+    "regenerator-runtime": "^0.14.0",
+    "wavefile": "^11.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.5",
