@@ -11,7 +11,7 @@ const Footer = () => {
       {/* <FcQuestions style={{height:"100%"}}/>  */}
       <BsQuestionSquare style={{marginRight:"5px"}} />
       Preguntas Frecuentes</Link>
-      <p>&copy; 2024 NutriPlan IA. Todos los derechos reservados.</p>
+      <p>&copy; 2024 NutriPlan AI. Todos los derechos reservados.</p>
       
     </footer>
   );

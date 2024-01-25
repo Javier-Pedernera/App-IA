@@ -7,15 +7,18 @@ import './index.css'
 import Landing from './components/Landing/index.jsx'
 import 'regenerator-runtime/runtime'
 import Layout from './components/Layout/index.jsx';
+import { Provider } from 'react-redux';
+import store from "./Redux/Store/Store";
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     {/* <ThemeProvider> */}
-      {/* <Provider store={store}> */}
+      <Provider store={store}>
         <RouterProvider router={router}>
         <Layout/>
           {/* <Landing /> */}
         </RouterProvider>
-      {/* </Provider> */}
+      </Provider>
     {/* </ThemeProvider> */}
   </React.StrictMode>
   // <React.StrictMode>

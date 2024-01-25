@@ -1,0 +1,9 @@
+.user {
+  font-size: medium;
+  text-align: start;
+  }
+  
+  .assistant {
+    font-size: medium;
+  text-align: end;
+  }

@@ -1,0 +1,13 @@
+.contenedor{
+  display: flex;
+    align-items:center;
+    flex-direction: row;
+    /* flexDirection: window.innerWidth <=520 ? 'column': 'row'; */
+    width:100%;
+    
+}
+  @media screen and (max-width: 710px) {
+      .contenedor {
+        flex-direction: column;
+      }
+    }
