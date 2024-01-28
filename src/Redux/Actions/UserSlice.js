@@ -12,7 +12,7 @@ const Slice = createSlice({
         }
     }
 });
-
+console.log(initialState.userData);
 
 export const { getUser } = Slice.actions;
 export default Slice.reducer;
