@@ -1,30 +1,36 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ListGroup } from 'react-bootstrap';
 import './styles.css';
+
 const Transcription = ({ textoTranscripcion }) => {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    // Hacer scroll hacia abajo cada vez que se actualice el contenido
+    containerRef.current.scrollTop = containerRef.current.scrollHeight;
+  }, [textoTranscripcion]);
+
   return (
-    <div id="transcripcion" style={{ width: '100%', height: '100%', display:'flex', flexDirection:'column'
-  }} className="border p-3 m-3">
-      <h2>Transcripción:</h2>
-      {textoTranscripcion.map((mensaje, index) => (
-
-<ListGroup>
-<ListGroup.Item 
- variant={mensaje.type == 'user' ? 'primary' : 'Light'}
- className={mensaje.type}
- >
-  {/* <b>{mensaje.type}</b> */}
-  {/* :  */}
-  {mensaje.content}
-</ListGroup.Item>
-</ListGroup>
-
-        // <div key={index} className={mensaje.type === 'user' ? 'user-message' : 'assistant-message'}
-        //   >
-        //   {mensaje.type}: {mensaje.content}
-        // </div>
-      ))}
+    <div
+      className='allcontent'
+      ref={containerRef}
+    >
+      {/* <h2>Transcripción:</h2> */}
+      {/* <ListGroup > */}
+        {textoTranscripcion.map((mensaje, index) => (
+          <ListGroup as="ul"
+            key={index}
+            style={{ marginTop: "5px"}}
+            // active={mensaje.type === 'user' ? 'false' : 'true'}
+            className={mensaje.type}
+          >
+            <div className={`globo${mensaje.type.length}`} as="li">{mensaje.content}</div> 
+            {/* <ListGroup.Item as="li" active>{mensaje.content}</ListGroup.Item> */}
+            
+          </ListGroup>
+        ))}
+      {/* </ListGroup> */}
     </div>
   );
 };
