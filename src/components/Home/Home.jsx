@@ -11,19 +11,10 @@ export default function Home() {
   const User = useSelector((state) => state.user.userData);
   const welcome = useSelector((state) => state.messages.messages);
   const selectedVoice = useSelector((state) => state.messages.selectedVoice);
-  // const [welcome, setWelcome] = useState();
-  // const dispatch = useDispatch()
-  // console.log("en Home welcome",welcome.length);
-  // console.log("en Home user",User.message);
-  // useEffect(() => {
-  //   if(User.message && !welcome.length){
-  //     const message = { type: 'NP AI', content: User.message, timestamp: new Date() }
-  //   // dispatch(addMessage(message))
-  //   }
-  // }, [dispatch]);
+
 
   return (
-<MicrophoneVisualizer/>
+    <MicrophoneVisualizer />
   );
 }
 

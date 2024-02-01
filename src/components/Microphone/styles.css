@@ -1,15 +1,61 @@
+/* @import  url(../../assets/fondoIA.jpg)  */
+
 .contenedor {
   display: flex;
   align-items: center;
   flex-direction: row;
-  /* flexDirection: window.innerWidth <=520 ? 'column': 'row'; */
   width: 100%;
-
+/* background-image: url(../../assets/fondo.png); */
 }
+
 
 @media screen and (max-width: 710px) {
   .contenedor {
     flex-direction: column;
+    width: 100%;
+  }
+}
+.BrainImg{
+width: 40%;
+height: 40%;
+}
+@media screen and (max-width: 710px) {
+  .BrainImg {
+    width: 20%;
+height: 20%;
+margin-bottom: 20px;
+  }
+}
+
+.sub_contenedor{
+  display: flex;
+  width: 100%;
+height: 100%;
+align-items: center;
+}
+.sub_contenedor2{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+@media screen and (max-width: 710px) {
+  .sub_contenedor2 {
+    margin-top: 5%;
+  }
+}
+.btnReset{
+                width: 40%;
+                height: auto;
+                margin: 10px;
+                border-radius: 5px;
+}
+@media screen and (max-width: 710px) {
+  .btnReset {
+    width: auto;
+    max-height: 10%;
+    margin: 0px;
+    /* padding: 10px; */
   }
 }
 
@@ -22,7 +68,7 @@
 
 @media screen and (max-width: 710px) {
   .trasnscription_cont {
-    width: 100%;
+    width: 95%;
     margin-left:10px;
   }
 }

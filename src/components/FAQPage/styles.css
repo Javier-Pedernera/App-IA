@@ -1,0 +1,38 @@
+.all_content {
+  padding: 20px;
+  background-color: #f4f4f4;
+  height: 100%;
+  width: 100%;
+  font-size: 18px;
+}
+
+@media screen and (max-width: 710px) {
+  .all_content {
+    font-size: 1.1rem;
+  }
+}
+h1 {
+  color: #446fb6;
+  margin-bottom: 20px;
+  
+}
+
+section {
+  margin-top: 40px;
+  /* margin-bottom: 20px; */
+  /* margin-top: 200px; */
+}
+
+.title {
+  color: #446fb6;
+}
+
+h2 {
+  font-size: 18px;
+  color: #343f51;
+}
+
+.imagenLogo {
+  margin-top: 20px;
+  width: 40%;
+}/*# sourceMappingURL=styles.css.map */

@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    messages:[],
-    selectedVoice:'alloy'
+    messages: [],
+    selectedVoice: ''
 };
 
 const Slice = createSlice({
@@ -10,20 +10,20 @@ const Slice = createSlice({
     initialState,
     reducers: {
         compare: (state, action) => {
-            if(state.messages.length < action.payload.length)
-            state.messages= action.payload;   
+            if (state.messages.length < action.payload.length)
+                state.messages = action.payload;
         },
         messageAdded: (state, action) => {
-            state.messages.push(action.payload);   
+            state.messages.push(action.payload);
         },
         messageAI: (state, action) => {
-            state.messages.push(action.payload);   
+            state.messages.push(action.payload);
         },
         selectVoice: (state, action) => {
-            state.selectedVoice = action.payload;   
+            state.selectedVoice = action.payload;
         },
         getOut: (state, action) => {
-            state.messages = [];  
+            state.messages = [];
         },
     }
 });
