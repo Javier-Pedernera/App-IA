@@ -45,7 +45,7 @@ const MicrophoneVisualizer = () => {
   console.log("finalTranscript:", finalTranscript);
   console.log("recording:", recording);
   console.log("lstening:", listening);
-
+console.log("microfono habilitado?", isMicrophoneAvailable);
   // Funcion para pasar de texto a voz con OpenAI
   const handleSpeech = async () => {
     const lastMessage = messages.length ? messages[messages.length - 1].content : "no se envio el ultimo mensaje"
@@ -123,9 +123,10 @@ const MicrophoneVisualizer = () => {
       isMounted.current = false;
       return;
     }
-
+    //si el ultimo msj es de IA que lo lea
+console.log("se envia la funcion handleSpeech?",(messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) );    
     if (messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) {
-      console.log("se envia la funcion handleSpeech?",(messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) );
+      console.log("se envia handleSpeech");
       handleSpeech()
     }
   }, [messages]);
