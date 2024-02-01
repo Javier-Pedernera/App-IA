@@ -55,15 +55,16 @@ console.log("microfono habilitado?", isMicrophoneAvailable);
       handleStop()
     }
     //activa la funcion de grabar 
+    console.log("recording en primer useeEffect", recording);
     if (recording) {
-      console.log("recording", recording);
+      
       SpeechRecognition.startListening({ continuous: false, language: "es-AR" });
 
     }
   }, [recording, listening]);
 
   useEffect(() => {
-
+    console.log("segundo useeEffect")
     if (finalTranscript !== '' && finalTranscript !== true && !endPlan) {
       setLoadingMsg(true)
       const userResponse = {
