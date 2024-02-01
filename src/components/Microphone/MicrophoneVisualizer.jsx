@@ -46,32 +46,7 @@ const MicrophoneVisualizer = () => {
   console.log("recording:", recording);
   console.log("lstening:", listening);
 console.log("microfono habilitado?", isMicrophoneAvailable);
-  // Funcion para pasar de texto a voz con OpenAI
-  const handleSpeech = async function ()  {
-    const lastMessage = messages.length ? messages[messages.length - 1].content : "no se envio el ultimo mensaje"
-    console.log("lastMessage en la funcion to speech",lastMessage);
-    try {
-      setLoadingMsg(true)
-      const response = await textToSpeech(lastMessage, selectedVoice.length ? selectedVoice : "alloy");
-      console.log("response",response);
-      if (response) {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        console.log("url",url);
-        const audio = new Audio(url);
-        audio.play();
-        setLoadingMsg(false)
-        audio.addEventListener('ended', () => {
-          setAudioPlayed(false)
-          setRecording(true)
-
-        });
-      }
-    } catch (error) {
-      console.error("Error en handleSpeech:", error);
-      setLoadingMsg(false);
-    }
-  }
-
+  
 
   useEffect(() => {
 
@@ -143,6 +118,32 @@ console.log("se envia la funcion handleSpeech?",(messages.length && messages[mes
     SpeechRecognition.stopListening();
     setEndPlan(true)
   };
+  // Funcion para pasar de texto a voz con OpenAI
+  const handleSpeech = async function ()  {
+    const lastMessage = messages.length ? messages[messages.length - 1].content : "no se envio el ultimo mensaje"
+    console.log("lastMessage en la funcion to speech",lastMessage);
+    try {
+      setLoadingMsg(true)
+      const response = await textToSpeech(lastMessage, selectedVoice.length ? selectedVoice : "alloy");
+      console.log("response",response);
+      if (response) {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        console.log("url",url);
+        const audio = new Audio(url);
+        audio.play();
+        setLoadingMsg(false)
+        audio.addEventListener('ended', () => {
+          setAudioPlayed(false)
+          setRecording(true)
+
+        });
+      }
+    } catch (error) {
+      console.error("Error en handleSpeech:", error);
+      setLoadingMsg(false);
+    }
+  }
+
 
   return (
     <div style={{
