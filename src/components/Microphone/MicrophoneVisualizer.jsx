@@ -41,12 +41,14 @@ const MicrophoneVisualizer = () => {
   // Funcion para pasar de texto a voz con OpenAI
   const handleSpeech = async () => {
     const lastMessage = messages.length ? messages[messages.length - 1].content : "no se envio el ultimo mensaje"
+    console.log(lastMessage);
     try {
       setLoadingMsg(true)
       const response = await textToSpeech(lastMessage, selectedVoice.length ? selectedVoice : "alloy");
       console.log(response);
       if (response) {
         const url = window.URL.createObjectURL(new Blob([response.data]));
+        console.log(url);
         const audio = new Audio(url);
         audio.play();
         setLoadingMsg(false)
@@ -155,10 +157,10 @@ const MicrophoneVisualizer = () => {
                 }} variant="danger" onClick={handleStop} disabled={!listening}>
                 Stop Listening
               </Button> : <div></div>}
-            {/* <Button className='btnReset'
+            <Button className='btnReset'
               variant="warning" onClick={handleReset}>
               Reset Transcription
-            </Button> */}
+            </Button>
 
             <div id="recordings" style={{ margin: '1rem 0' }}></div>
           </div>
