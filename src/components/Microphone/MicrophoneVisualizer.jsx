@@ -47,7 +47,7 @@ const MicrophoneVisualizer = () => {
   console.log("lstening:", listening);
 console.log("microfono habilitado?", isMicrophoneAvailable);
   // Funcion para pasar de texto a voz con OpenAI
-  const handleSpeech = async () => {
+  const handleSpeech = async function ()  {
     const lastMessage = messages.length ? messages[messages.length - 1].content : "no se envio el ultimo mensaje"
     console.log("lastMessage en la funcion to speech",lastMessage);
     try {
@@ -67,7 +67,8 @@ console.log("microfono habilitado?", isMicrophoneAvailable);
         });
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error en handleSpeech:", error);
+      setLoadingMsg(false);
     }
   }
 

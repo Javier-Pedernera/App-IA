@@ -18,7 +18,8 @@ export async function textToSpeech  (text, voice) {
           );
           return response
       } catch (error) {
-          console.error(error);
+        console.error("Error en textToSpeech:", error);
+        throw error;
       }
     }
     //export function formatDate(inputDate)
