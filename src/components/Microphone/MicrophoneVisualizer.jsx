@@ -41,14 +41,14 @@ const MicrophoneVisualizer = () => {
   // Funcion para pasar de texto a voz con OpenAI
   const handleSpeech = async () => {
     const lastMessage = messages.length ? messages[messages.length - 1].content : "no se envio el ultimo mensaje"
-    console.log(lastMessage);
+    console.log("lastMessage en la funcion to speech",lastMessage);
     try {
       setLoadingMsg(true)
       const response = await textToSpeech(lastMessage, selectedVoice.length ? selectedVoice : "alloy");
-      console.log(response);
+      console.log("response",response);
       if (response) {
         const url = window.URL.createObjectURL(new Blob([response.data]));
-        console.log(url);
+        console.log("url",url);
         const audio = new Audio(url);
         audio.play();
         setLoadingMsg(false)
@@ -116,6 +116,7 @@ const MicrophoneVisualizer = () => {
     }
 
     if (messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) {
+      console.log("se envia la funcion handleSpeech?",(messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) );
       handleSpeech()
     }
   }, [messages]);
