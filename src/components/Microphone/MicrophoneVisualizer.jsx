@@ -44,6 +44,7 @@ const MicrophoneVisualizer = () => {
     try {
       setLoadingMsg(true)
       const response = await textToSpeech(lastMessage, selectedVoice.length ? selectedVoice : "alloy");
+      console.log(response);
       if (response) {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const audio = new Audio(url);
@@ -96,7 +97,7 @@ const MicrophoneVisualizer = () => {
       setLoadingMsg(false)
     }
 
-    if (listening == false && recording == true && !endPlan) { SpeechRecognition.startListening({ continuous: false }); }
+    if (listening == false && recording == true && !endPlan) { SpeechRecognition.startListening({ continuous: false, language: "es-AR" }); }
 
   }, [finalTranscript]);
 
