@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import WaveSurfer from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js';
-import RecordPlugin from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/record.esm.js';
 import { Button, Container, Row, Col, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Transcription from '../Transcription';
@@ -38,6 +36,16 @@ const MicrophoneVisualizer = () => {
   const dispatch = useDispatch();
   const isMounted = useRef(true);
 
+  console.log("valores a observar");
+  console.log("conversacion", conversation);
+  console.log("mensajes en el global:", messages);
+  if(messages.length){console.log("messages.length-1.type",messages[messages.length - 1].type);}
+  console.log("Usuario actual en el global", actualUser);
+  console.log("AudioPlayed", audioPlayed);
+  console.log("finalTranscript:", finalTranscript);
+  console.log("recording:", recording);
+  console.log("lstening:", listening);
+
   // Funcion para pasar de texto a voz con OpenAI
   const handleSpeech = async () => {
     const lastMessage = messages.length ? messages[messages.length - 1].content : "no se envio el ultimo mensaje"
@@ -72,6 +80,7 @@ const MicrophoneVisualizer = () => {
     }
     //activa la funcion de grabar 
     if (recording) {
+      console.log("recording", recording);
       SpeechRecognition.startListening({ continuous: false, language: "es-AR" });
 
     }
@@ -104,7 +113,7 @@ const MicrophoneVisualizer = () => {
   }, [finalTranscript]);
 
   useEffect(() => {
-    // console.log(isMounted);
+    console.log(isMounted);
     // verifica que esten los datos en localStorage
     if (!messages || !messages.length) {
       dispatch(compareMessages())

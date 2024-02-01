@@ -11,9 +11,7 @@ export async function textToSpeech  (text, voice) {
               },
               {
                   headers: {
-                      Authorization: `Bearer ${
-                          import.meta.env.VITE_OPENAI_API_KEY
-                      }`,
+                      Authorization: `Bearer ${ import.meta.env.VITE_OPENAI_API_KEY }`,
                   },
                   responseType: "blob",
               }
