@@ -6,11 +6,12 @@ import Transcription from '../Transcription';
 import './styles.css';
 import { textToSpeech } from '../../utils/TTS';
 import { useDispatch, useSelector } from 'react-redux';
-import { addMessage, compareMessages, responseUser } from '../../Redux/Actions/MessageGet';
+import { Out, addMessage, compareMessages, responseUser } from '../../Redux/Actions/MessageGet';
 import microfono from '../../assets/mic.png';
 import hablaUser from '../../assets/humanspeaking.gif';
 import hablaAI from '../../assets/AIspeaking.gif';
 import Complete from '../../assets/Complete.gif';
+import { useNavigate } from 'react-router-dom';
 const MicrophoneVisualizer = () => {
   const {
     transcript,
@@ -21,17 +22,13 @@ const MicrophoneVisualizer = () => {
     resetTranscript,
     isMicrophoneAvailable
   } = useSpeechRecognition();
-
-  const OpenAIKey = import.meta.env.VITE_OPENAI_API_KEY
+  const navigate = useNavigate();
   const actualUser = useSelector((state) => state.user.userData);
   const selectedVoice = useSelector((state) => state.messages.selectedVoice);
   const messages = useSelector((state) => state.messages.messages);
   const [recording, setRecording] = useState(false);
-  const [audioBlob, setAudioBlob] = useState(null);
-  const mediaRecorder = useRef(null);
   const [loadinMsg, setLoadingMsg] = useState(false);
   const [conversation, setConversation] = useState([]);
-  const [audioPlayed, setAudioPlayed] = useState(false);
   const [endPlan, setEndPlan] = useState(false);
   const dispatch = useDispatch();
   const isMounted = useRef(true);
@@ -97,8 +94,8 @@ const MicrophoneVisualizer = () => {
   const handleReset = () => {
     resetTranscript();
     setConversation([]);
-    setAudioBlob(null);
-    setAudioPlayed(false);
+    dispatch(Out())
+    navigate(`/home/${newstoredThreadId}`);
   };
   const handleStop = () => {
     setRecording(false);
@@ -158,7 +155,7 @@ const MicrophoneVisualizer = () => {
               </Button> : <div></div>}
             <Button className='btnReset'
               variant="warning" onClick={handleReset}>
-              Reset Transcription
+              Leave and reset conversation
             </Button>
 
             <div id="recordings" style={{ margin: '1rem 0' }}></div>
