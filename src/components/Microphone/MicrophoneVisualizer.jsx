@@ -90,11 +90,12 @@ console.log("microfono habilitado?", isMicrophoneAvailable);
   }, [finalTranscript]);
 
   useEffect(() => {
+    console.log("tercero useeEffect")
     console.log(isMounted);
     // verifica que esten los datos en localStorage
-    if (!messages || !messages.length) {
-      dispatch(compareMessages())
-    }
+    // if (!messages || !messages.length) {
+    //   dispatch(compareMessages())
+    // }
     //Pasa a audio cuando el ultimo msj del array es de la IA
     if (isMounted.current) {
       isMounted.current = false;
