@@ -117,7 +117,6 @@ const MicrophoneVisualizer = () => {
           });
           audio.play();
         });
-        setAudioPlayed(false);
         setRecording(true);
         setLoadingMsg(false);
       }
