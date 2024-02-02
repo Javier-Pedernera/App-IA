@@ -131,13 +131,17 @@ console.log("se envia la funcion handleSpeech?",(messages.length && messages[mes
         const url = window.URL.createObjectURL(new Blob([response.data]));
         console.log("url",url);
         const audio = new Audio(url);
-        audio.play();
-        setLoadingMsg(false)
-        audio.addEventListener('ended', () => {
-          setAudioPlayed(false)
-          setRecording(true)
-
+        await new Promise((resolve) => {
+          audio.addEventListener('ended', () => {
+            resolve(); // Resuelve la promesa cuando se completa la reproducción del audio
+          });
+  
+          audio.play();
         });
+  
+        setAudioPlayed(false);
+        setRecording(true);
+        setLoadingMsg(false);
       }
     } catch (error) {
       console.error("Error en handleSpeech:", error);
