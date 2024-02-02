@@ -11,16 +11,15 @@ export async function textToSpeech  (text, voice) {
               },
               {
                   headers: {
-                      Authorization: `Bearer ${
-                          import.meta.env.VITE_OPENAI_API_KEY
-                      }`,
+                      Authorization: `Bearer ${ import.meta.env.VITE_OPENAI_API_KEY }`,
                   },
                   responseType: "blob",
               }
           );
           return response
       } catch (error) {
-          console.error(error);
+        console.error("Error en textToSpeech:", error);
+        throw error;
       }
     }
     //export function formatDate(inputDate)

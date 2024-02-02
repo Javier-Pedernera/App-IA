@@ -55,7 +55,7 @@ export default function ButtonLanding({ UserID }) {
           const newstoredThreadId = user.threadId.slice('thread_'.length);
           setAnimating(false);
           navigate(`/home/${newstoredThreadId}`);
-        }, 1150);
+        }, 1000);
       } else {
         const storedThreadId = await Cookies.get('user').threadId;
         if (storedThreadId) {

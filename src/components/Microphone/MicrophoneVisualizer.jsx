@@ -1,18 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import WaveSurfer from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js';
-import RecordPlugin from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/record.esm.js';
 import { Button, Container, Row, Col, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Transcription from '../Transcription';
 import './styles.css';
 import { textToSpeech } from '../../utils/TTS';
 import { useDispatch, useSelector } from 'react-redux';
-import { addMessage, compareMessages, responseUser } from '../../Redux/Actions/MessageGet';
+import { Out, addMessage, compareMessages, responseUser } from '../../Redux/Actions/MessageGet';
 import microfono from '../../assets/mic.png';
 import hablaUser from '../../assets/humanspeaking.gif';
 import hablaAI from '../../assets/AIspeaking.gif';
 import Complete from '../../assets/Complete.gif';
+import { useNavigate } from 'react-router-dom';
 const MicrophoneVisualizer = () => {
   const {
     transcript,
@@ -23,60 +22,31 @@ const MicrophoneVisualizer = () => {
     resetTranscript,
     isMicrophoneAvailable
   } = useSpeechRecognition();
-
-  const OpenAIKey = import.meta.env.VITE_OPENAI_API_KEY
+  const navigate = useNavigate();
   const actualUser = useSelector((state) => state.user.userData);
   const selectedVoice = useSelector((state) => state.messages.selectedVoice);
   const messages = useSelector((state) => state.messages.messages);
   const [recording, setRecording] = useState(false);
-  const [audioBlob, setAudioBlob] = useState(null);
-  const mediaRecorder = useRef(null);
   const [loadinMsg, setLoadingMsg] = useState(false);
   const [conversation, setConversation] = useState([]);
-  const [audioPlayed, setAudioPlayed] = useState(false);
   const [endPlan, setEndPlan] = useState(false);
   const dispatch = useDispatch();
   const isMounted = useRef(true);
 
-  // Funcion para pasar de texto a voz con OpenAI
-  const handleSpeech = async () => {
-    const lastMessage = messages.length ? messages[messages.length - 1].content : "no se envio el ultimo mensaje"
-    try {
-      setLoadingMsg(true)
-      const response = await textToSpeech(lastMessage, selectedVoice.length ? selectedVoice : "alloy");
-      console.log(response);
-      if (response) {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const audio = new Audio(url);
-        audio.play();
-        setLoadingMsg(false)
-        audio.addEventListener('ended', () => {
-          setAudioPlayed(false)
-          setRecording(true)
-
-        });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-
   useEffect(() => {
 
     if (messages.length && messages[messages.length - 1].content === "Gracias por contestar las preguntas. Su plan nutricicional le llegará por e-mail") {
-      console.log("terminó la conversación");
       handleStop()
     }
     //activa la funcion de grabar 
     if (recording) {
+      
       SpeechRecognition.startListening({ continuous: false, language: "es-AR" });
 
     }
   }, [recording, listening]);
 
   useEffect(() => {
-
     if (finalTranscript !== '' && finalTranscript !== true && !endPlan) {
       setLoadingMsg(true)
       const userResponse = {
@@ -96,39 +66,67 @@ const MicrophoneVisualizer = () => {
       resetTranscript()
       setLoadingMsg(false)
     }
-
     if (listening == false && recording == true && !endPlan) { SpeechRecognition.startListening({ continuous: false, language: "es-AR" }); }
 
   }, [finalTranscript]);
 
   useEffect(() => {
-    // console.log(isMounted);
+
     // verifica que esten los datos en localStorage
     if (!messages || !messages.length) {
       dispatch(compareMessages())
     }
+    
+    
+    //si el ultimo msj es de IA que lo lea    
+    if (messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) {
+      // console.log("se envia handleSpeech");
+      handleSpeech()
+    }
+    
     //Pasa a audio cuando el ultimo msj del array es de la IA
     if (isMounted.current) {
       isMounted.current = false;
       return;
-    }
-
-    if (messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) {
-      handleSpeech()
     }
   }, [messages]);
 
   const handleReset = () => {
     resetTranscript();
     setConversation([]);
-    setAudioBlob(null);
-    setAudioPlayed(false);
+    dispatch(Out())
+    navigate(`/home/${newstoredThreadId}`);
   };
   const handleStop = () => {
     setRecording(false);
     SpeechRecognition.stopListening();
     setEndPlan(true)
   };
+  // Funcion para pasar de texto a voz con OpenAI
+  const handleSpeech = async function ()  {
+    const lastMessage = messages.length ? messages[messages.length - 1].content : "no se envio el ultimo mensaje"
+    try {
+      setLoadingMsg(true)
+      const response = await textToSpeech(lastMessage, selectedVoice.length ? selectedVoice : "alloy");
+      if (response) {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const audio = new Audio(url);
+        await new Promise((resolve) => {
+          audio.addEventListener('ended', () => {
+            resolve(); // Resuelve la promesa cuando se completa la reproducción del audio
+          });
+          audio.play();
+        });
+        setAudioPlayed(false);
+        setRecording(true);
+        setLoadingMsg(false);
+      }
+    } catch (error) {
+      console.error("Error en handleSpeech:", error);
+      setLoadingMsg(false);
+    }
+  }
+
 
   return (
     <div style={{
@@ -155,10 +153,10 @@ const MicrophoneVisualizer = () => {
                 }} variant="danger" onClick={handleStop} disabled={!listening}>
                 Stop Listening
               </Button> : <div></div>}
-            {/* <Button className='btnReset'
+            <Button className='btnReset'
               variant="warning" onClick={handleReset}>
-              Reset Transcription
-            </Button> */}
+              Leave and reset conversation
+            </Button>
 
             <div id="recordings" style={{ margin: '1rem 0' }}></div>
           </div>
