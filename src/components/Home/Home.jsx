@@ -11,7 +11,7 @@ export default function Home() {
   const User = useSelector((state) => state.user.userData);
   const welcome = useSelector((state) => state.messages.messages);
   const selectedVoice = useSelector((state) => state.messages.selectedVoice);
-console.log("este es el home");
+// console.log("este es el home");
 
   return (
     <MicrophoneVisualizer />

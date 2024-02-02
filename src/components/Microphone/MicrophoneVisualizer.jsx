@@ -83,7 +83,7 @@ const MicrophoneVisualizer = () => {
     
     //si el ultimo msj es de IA que lo lea    
     if (messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) {
-      console.log("se envia handleSpeech");
+      // console.log("se envia handleSpeech");
       handleSpeech()
     }
     
@@ -113,16 +113,13 @@ const MicrophoneVisualizer = () => {
       const response = await textToSpeech(lastMessage, selectedVoice.length ? selectedVoice : "alloy");
       if (response) {
         const url = window.URL.createObjectURL(new Blob([response.data]));
-        console.log("url",url);
         const audio = new Audio(url);
         await new Promise((resolve) => {
           audio.addEventListener('ended', () => {
             resolve(); // Resuelve la promesa cuando se completa la reproducción del audio
           });
-  
           audio.play();
         });
-  
         setAudioPlayed(false);
         setRecording(true);
         setLoadingMsg(false);
