@@ -65,6 +65,7 @@ console.log("microfono habilitado?", isMicrophoneAvailable);
 
   useEffect(() => {
     console.log("segundo useeEffect")
+    console.log("primer if",(finalTranscript !== '' && finalTranscript !== true && !endPlan))
     if (finalTranscript !== '' && finalTranscript !== true && !endPlan) {
       setLoadingMsg(true)
       const userResponse = {
@@ -84,14 +85,15 @@ console.log("microfono habilitado?", isMicrophoneAvailable);
       resetTranscript()
       setLoadingMsg(false)
     }
-
+    console.log("segundo if",(listening == false && recording == true && !endPlan))
     if (listening == false && recording == true && !endPlan) { SpeechRecognition.startListening({ continuous: false, language: "es-AR" }); }
 
   }, [finalTranscript]);
 
   useEffect(() => {
+
     console.log("tercero useeEffect")
-    console.log(isMounted);
+    console.log("ismounted Current",isMounted.current);
     // verifica que esten los datos en localStorage
     // if (!messages || !messages.length) {
     //   dispatch(compareMessages())
