@@ -98,17 +98,18 @@ console.log("microfono habilitado?", isMicrophoneAvailable);
     // if (!messages || !messages.length) {
     //   dispatch(compareMessages())
     // }
+    console.log("se envia la funcion handleSpeech?",(messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) );    
+    if (messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) {
+      console.log("se envia handleSpeech");
+      handleSpeech()
+    }
     //Pasa a audio cuando el ultimo msj del array es de la IA
     if (isMounted.current) {
       isMounted.current = false;
       return;
     }
     //si el ultimo msj es de IA que lo lea
-console.log("se envia la funcion handleSpeech?",(messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) );    
-    if (messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) {
-      console.log("se envia handleSpeech");
-      handleSpeech()
-    }
+
   }, [messages]);
 
   const handleReset = () => {
