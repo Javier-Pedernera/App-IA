@@ -36,26 +36,12 @@ const MicrophoneVisualizer = () => {
   const dispatch = useDispatch();
   const isMounted = useRef(true);
 
-  console.log("valores a observar");
-  console.log("conversacion", conversation);
-  console.log("mensajes en el global:", messages);
-  if(messages.length){console.log("messages.length-1.type",messages[messages.length - 1].type);}
-  console.log("Usuario actual en el global", actualUser);
-  console.log("AudioPlayed", audioPlayed);
-  console.log("finalTranscript:", finalTranscript);
-  console.log("recording:", recording);
-  console.log("lstening:", listening);
-console.log("microfono habilitado?", isMicrophoneAvailable);
-  
-
   useEffect(() => {
 
     if (messages.length && messages[messages.length - 1].content === "Gracias por contestar las preguntas. Su plan nutricicional le llegará por e-mail") {
-      console.log("terminó la conversación");
       handleStop()
     }
     //activa la funcion de grabar 
-    console.log("recording en primer useeEffect", recording);
     if (recording) {
       
       SpeechRecognition.startListening({ continuous: false, language: "es-AR" });
@@ -64,8 +50,6 @@ console.log("microfono habilitado?", isMicrophoneAvailable);
   }, [recording, listening]);
 
   useEffect(() => {
-    console.log("segundo useeEffect")
-    console.log("primer if",(finalTranscript !== '' && finalTranscript !== true && !endPlan))
     if (finalTranscript !== '' && finalTranscript !== true && !endPlan) {
       setLoadingMsg(true)
       const userResponse = {
@@ -85,31 +69,29 @@ console.log("microfono habilitado?", isMicrophoneAvailable);
       resetTranscript()
       setLoadingMsg(false)
     }
-    console.log("segundo if",(listening == false && recording == true && !endPlan))
     if (listening == false && recording == true && !endPlan) { SpeechRecognition.startListening({ continuous: false, language: "es-AR" }); }
 
   }, [finalTranscript]);
 
   useEffect(() => {
 
-    console.log("tercero useeEffect")
-    console.log("ismounted Current",isMounted.current);
     // verifica que esten los datos en localStorage
-    // if (!messages || !messages.length) {
-    //   dispatch(compareMessages())
-    // }
-    console.log("se envia la funcion handleSpeech?",(messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) );    
+    if (!messages || !messages.length) {
+      dispatch(compareMessages())
+    }
+    
+    
+    //si el ultimo msj es de IA que lo lea    
     if (messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) {
       console.log("se envia handleSpeech");
       handleSpeech()
     }
+    
     //Pasa a audio cuando el ultimo msj del array es de la IA
     if (isMounted.current) {
       isMounted.current = false;
       return;
     }
-    //si el ultimo msj es de IA que lo lea
-
   }, [messages]);
 
   const handleReset = () => {
@@ -126,11 +108,9 @@ console.log("microfono habilitado?", isMicrophoneAvailable);
   // Funcion para pasar de texto a voz con OpenAI
   const handleSpeech = async function ()  {
     const lastMessage = messages.length ? messages[messages.length - 1].content : "no se envio el ultimo mensaje"
-    console.log("lastMessage en la funcion to speech",lastMessage);
     try {
       setLoadingMsg(true)
       const response = await textToSpeech(lastMessage, selectedVoice.length ? selectedVoice : "alloy");
-      console.log("response",response);
       if (response) {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         console.log("url",url);
