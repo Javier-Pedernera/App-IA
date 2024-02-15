@@ -63,7 +63,7 @@ const MicrophoneVisualizer = () => {
         respuesta: finalTranscript
       }
       const messageUser = { type: 'user', content: finalTranscript, timestamp: new Date().toString() }
-      // console.log("data de la transcripcion", userResponse);
+      console.log("data de la transcripcion", userResponse);
       dispatch(addMessage(messageUser))
       dispatch(responseUser(userResponse))
       setRecording(false)
