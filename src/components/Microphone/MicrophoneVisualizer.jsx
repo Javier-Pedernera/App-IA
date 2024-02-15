@@ -7,7 +7,6 @@ import './styles.css';
 import { textToSpeech } from '../../utils/TTS';
 import { useDispatch, useSelector } from 'react-redux';
 import { Out, addMessage, compareMessages, responseUser } from '../../Redux/Actions/MessageGet';
-import microfono from '../../assets/mic.png';
 import hablaUser from '../../assets/humanspeaking.gif';
 import hablaAI from '../../assets/AIspeaking.gif';
 import Complete from '../../assets/Complete.gif';
@@ -32,22 +31,28 @@ const MicrophoneVisualizer = () => {
   const dispatch = useDispatch();
   const lastProcessedMessage = useRef(null);
 
-  // console.log("listening.length",listening.length);
-  // console.log("listening",listening);
-  // console.log("recording",recording);
-  // console.log("messages",messages);
+  console.log("listening.length", listening.length);
+  console.log("listening", listening);
+  console.log("recording", recording);
+  console.log("messages", messages);
 
   useEffect(() => {
 
     if (messages.length && messages[messages.length - 1].content === "Gracias por contestar las preguntas. Su plan nutricicional le llegará por e-mail") {
       handleStop()
     }
-    //activa la funcion de grabar 
-    // if (recording) {
-    //   SpeechRecognition.startListening({ continuous: false, language: "es-AR" });
-    // }
+    if (!messages || !messages.length) {
+      dispatch(compareMessages())
+    }
+    if (messages.length && messages[messages.length - 1].type === 'NP_AI' && !endPlan) {
+      const latestMessage = messages[messages.length - 1].content;
+      if (latestMessage !== lastProcessedMessage.current) {
+        handleSpeech();
+        lastProcessedMessage.current = latestMessage;
+      }
+    }
     if (listening == false && recording == true && !endPlan) { SpeechRecognition.startListening({ continuous: false, language: "es-AR" }); }
-  }, [recording, listening]);
+  }, [recording, listening, messages]);
 
   useEffect(() => {
     if (finalTranscript !== '' && finalTranscript !== true && !endPlan) {
@@ -67,16 +72,21 @@ const MicrophoneVisualizer = () => {
     }
   }, [finalTranscript]);
 
+  // useEffect(() => {
+  //   // verifica que esten los datos en localStorage
+  //   if (!messages || !messages.length) {
+  //     dispatch(compareMessages())
+  //   }
 
-  useEffect(() => {
-    if (messages.length && messages[messages.length - 1].type === 'NP_AI' && !endPlan) {
-      const latestMessage = messages[messages.length - 1].content;
-      if (latestMessage !== lastProcessedMessage.current) {
-        handleSpeech();
-        lastProcessedMessage.current = latestMessage;
-      }
-    }
-  }, [messages]);
+  //   if (messages.length && messages[messages.length - 1].type === 'NP_AI' && !endPlan) {
+  //     const latestMessage = messages[messages.length - 1].content;
+
+  //     if (latestMessage !== lastProcessedMessage.current) {
+  //       handleSpeech();
+  //       lastProcessedMessage.current = latestMessage;
+  //     }
+  //   }
+  // }, [messages]);
 
   // useEffect(() => {
 
@@ -107,7 +117,7 @@ const MicrophoneVisualizer = () => {
     setEndPlan(true)
   };
   // Funcion para pasar de texto a voz con OpenAI
-  const handleSpeech = async function ()  {
+  const handleSpeech = async function () {
     const lastMessage = messages.length ? messages[messages.length - 1].content : "no se envio el ultimo mensaje"
     try {
       setLoadingMsg(true)
