@@ -28,10 +28,14 @@ const MicrophoneVisualizer = () => {
   const messages = useSelector((state) => state.messages.messages);
   const [recording, setRecording] = useState(false);
   const [loadinMsg, setLoadingMsg] = useState(false);
-  const [conversation, setConversation] = useState([]);
   const [endPlan, setEndPlan] = useState(false);
   const dispatch = useDispatch();
-  const isMounted = useRef(true);
+  const lastProcessedMessage = useRef(null);
+
+  // console.log("listening.length",listening.length);
+  // console.log("listening",listening);
+  // console.log("recording",recording);
+  // console.log("messages",messages);
 
   useEffect(() => {
 
@@ -39,15 +43,15 @@ const MicrophoneVisualizer = () => {
       handleStop()
     }
     //activa la funcion de grabar 
-    if (recording) {
-      
-      SpeechRecognition.startListening({ continuous: false, language: "es-AR" });
-
-    }
+    // if (recording) {
+    //   SpeechRecognition.startListening({ continuous: false, language: "es-AR" });
+    // }
+    if (listening == false && recording == true && !endPlan) { SpeechRecognition.startListening({ continuous: false, language: "es-AR" }); }
   }, [recording, listening]);
 
   useEffect(() => {
     if (finalTranscript !== '' && finalTranscript !== true && !endPlan) {
+      SpeechRecognition.stopListening();
       setLoadingMsg(true)
       const userResponse = {
         token: actualUser.tokenUser,
@@ -55,45 +59,45 @@ const MicrophoneVisualizer = () => {
       }
       const messageUser = { type: 'user', content: finalTranscript, timestamp: new Date().toString() }
       // console.log("data de la transcripcion", userResponse);
-      setConversation((prevConversation) => [
-        ...prevConversation,
-        messageUser,
-      ]);
       dispatch(addMessage(messageUser))
       dispatch(responseUser(userResponse))
       setRecording(false)
-      SpeechRecognition.stopListening();
       resetTranscript()
       setLoadingMsg(false)
     }
-    if (listening == false && recording == true && !endPlan) { SpeechRecognition.startListening({ continuous: false, language: "es-AR" }); }
-
   }, [finalTranscript]);
 
-  useEffect(() => {
 
-    // verifica que esten los datos en localStorage
-    if (!messages || !messages.length) {
-      dispatch(compareMessages())
-    }
-    
-    
-    //si el ultimo msj es de IA que lo lea    
-    if (messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) {
-      // console.log("se envia handleSpeech");
-      handleSpeech()
-    }
-    
-    //Pasa a audio cuando el ultimo msj del array es de la IA
-    if (isMounted.current) {
-      isMounted.current = false;
-      return;
+  useEffect(() => {
+    if (messages.length && messages[messages.length - 1].type === 'NP_AI' && !endPlan) {
+      const latestMessage = messages[messages.length - 1].content;
+      if (latestMessage !== lastProcessedMessage.current) {
+        handleSpeech();
+        lastProcessedMessage.current = latestMessage;
+      }
     }
   }, [messages]);
 
+  // useEffect(() => {
+
+  //   // verifica que esten los datos en localStorage
+  //   // if (!messages || !messages.length) {
+  //   //   dispatch(compareMessages())
+  //   // }
+  //   //si el ultimo msj es de IA que lo lea    
+  //   if (messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) {
+  //     console.log("se envia handleSpeech");
+  //     // handleSpeech()
+  //   }
+  //   //Pasa a audio cuando el ultimo msj del array es de la IA
+  //   if (isMounted.current) {
+  //     isMounted.current = false;
+  //     return;
+  //   }
+  // }, [messages]);
+
   const handleReset = () => {
     resetTranscript();
-    setConversation([]);
     dispatch(Out())
     navigate(`/home/${newstoredThreadId}`);
   };

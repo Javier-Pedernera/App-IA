@@ -1,9 +1,9 @@
 import ButtonLanding from "../Btn/buttonLanding"
-import logoApp from '../../assets/NutriPlan.png';
+import logoApp from "../../assets/NutriPlan.png"
 import { useState } from "react";
 import { FormControl, InputGroup } from "react-bootstrap";
-import Form from 'react-bootstrap/Form';
-import './styles.scss';
+// import Form from 'react-bootstrap/Form';
+import './styles.css';
 
 export default function Landing() {
 
@@ -37,6 +37,7 @@ export default function Landing() {
                     <div className="div_input">
                         <InputGroup className="mb-3" style={{ width: "300px", height: "40px" }}>
                             <FormControl
+                                id="emailInput"
                                 placeholder="Ingresa tu correo electronico"
                                 value={username}
                                 onChange={handleUsernameChange}
@@ -55,7 +56,6 @@ export default function Landing() {
 
                 </div>
             </div>
-
         </>
     )
 }

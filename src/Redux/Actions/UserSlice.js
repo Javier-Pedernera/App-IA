@@ -8,7 +8,11 @@ const Slice = createSlice({
     initialState,
     reducers: {
         getUser: (state, action) => {
-            state.userData = action.payload;
+            return{
+                ...state,
+                userData: action.payload
+               } 
+            // state.userData = action.payload;
         }
     }
 });

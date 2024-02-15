@@ -11,19 +11,40 @@ const Slice = createSlice({
     reducers: {
         compare: (state, action) => {
             if (state.messages.length < action.payload.length)
-                state.messages = action.payload;
+                return {
+                    ...state,
+                    messages: [...state.messages, action.payload]
+                }
+
+            // state.messages = action.payload;
         },
         messageAdded: (state, action) => {
-            state.messages.push(action.payload);
+            return {
+                ...state,
+                messages: [...state.messages, action.payload]
+            }
+            // state.messages.push(action.payload);
         },
         messageAI: (state, action) => {
-            state.messages.push(action.payload);
+            return {
+                ...state,
+                messages: [...state.messages, action.payload]
+            }
+            // state.messages.push(action.payload);
         },
         selectVoice: (state, action) => {
-            state.selectedVoice = action.payload;
+            return {
+                ...state,
+                selectedVoice: action.payload,
+            }
+            // state.selectedVoice = action.payload;
         },
         getOut: (state, action) => {
-            state.messages = [];
+            return {
+                ...state,
+                messages: [],
+            }
+            // state.messages = [];
         },
     }
 });
