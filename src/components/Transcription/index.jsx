@@ -12,10 +12,9 @@ const Transcription = ({ textoTranscripcion, loader }) => {
 
   useEffect(() => {
     // Hacer scroll hacia abajo cada vez que se actualice el contenido
-    if(containerRef.current.scrollHeight){
+    if (containerRef.current.scrollHeight) {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
-    
   }, [textoTranscripcion]);
   // console.log("loader",loader);
 
@@ -24,11 +23,11 @@ const Transcription = ({ textoTranscripcion, loader }) => {
       className='allcontent'
       ref={containerRef}
     >
-    {textoTranscripcion.map((mensaje, index) => (
+      {textoTranscripcion?.map((mensaje, index) => (
         <ListGroup as="ul" key={index} style={{ marginTop: "10px" }} className={mensaje.type}>
-         
+
           {index === textoTranscripcion.length - 1 ? (
-            <div className={`${mensaje.type}lastMsg`} style={{display:"flex", alignItems:"flex-end"}}>
+            <div className={`${mensaje.type}lastMsg`} style={{ display: "flex", alignItems: "flex-end" }}>
               {mensaje.type === "user" ? (
                 <img src={image_User} alt={mensaje.type} className='image_NPlan' />
               ) : (
@@ -37,7 +36,7 @@ const Transcription = ({ textoTranscripcion, loader }) => {
               {loader ? (
                 <div className="loader"></div>
               ) : (
-                <div className={`globo${mensaje.type.length}`} as="li">
+                <div className={`globo${mensaje?.type?.length}`} as="li">
                   {mensaje.content}
                 </div>
               )}
@@ -49,8 +48,8 @@ const Transcription = ({ textoTranscripcion, loader }) => {
               ) : (
                 <img src={image_NP} alt="NutriPlan" className='image_NPlan' />
               )}<div className={`globo${mensaje.type.length}`} as="li">
-              {mensaje.content}
-            </div>
+                {mensaje.content}
+              </div>
             </div>
           )}
         </ListGroup>
