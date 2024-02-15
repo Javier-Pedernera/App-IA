@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom'
 import Footer from '../Footer/index.jsx'
-import Landing from '../Landing/index.jsx'
 import Navbar from '../NavBar/index.jsx'
 
 export default function Layout() {   
