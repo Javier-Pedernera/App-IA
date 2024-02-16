@@ -23,9 +23,8 @@ const Navbar = () => {
   const user = Cookies.get('userEmail');
 
   useEffect(() => {
-    const user = Cookies.get('userEmail');
+    // const user = Cookies.get('userEmail');
     if (!Object.keys(userActive).length && user) {
-      // const user = Cookies.get('userEmail');
       dispatch(getUser(user))
     }
   }, [userActive]);
