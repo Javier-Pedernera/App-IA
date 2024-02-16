@@ -35,24 +35,7 @@ const MicrophoneVisualizer = () => {
   console.log("listening", listening);
   console.log("recording", recording);
   console.log("messages", messages);
-
-  useEffect(() => {
-
-    if (messages.length && messages[messages.length - 1].content === "Gracias por contestar las preguntas. Su plan nutricicional le llegará por e-mail") {
-      handleStop()
-    }
-    if (!messages || !messages.length) {
-      dispatch(compareMessages())
-    }
-    if (messages.length && messages[messages.length - 1].type === 'NP_AI' && !endPlan) {
-      const latestMessage = messages[messages.length - 1].content;
-      if (latestMessage !== lastProcessedMessage.current) {
-        handleSpeech();
-        lastProcessedMessage.current = latestMessage;
-      }
-    }
-    if (listening == false && recording == true && !endPlan) { SpeechRecognition.startListening({ continuous: false, language: "es-AR" }); }
-  }, [recording, listening, messages]);
+  console.log("finaltranscript", finalTranscript);
 
   useEffect(() => {
     if (finalTranscript !== '' && finalTranscript !== true && !endPlan) {
@@ -72,39 +55,31 @@ const MicrophoneVisualizer = () => {
     }
   }, [finalTranscript]);
 
-  // useEffect(() => {
-  //   // verifica que esten los datos en localStorage
-  //   if (!messages || !messages.length) {
-  //     dispatch(compareMessages())
-  //   }
+  useEffect(() => {
+    if (messages.length && messages[messages.length - 1].content === "Gracias por contestar las preguntas. Su plan nutricicional le llegará por e-mail") {
+      handleStop()
+    }
+    if (listening == false && recording == true && !endPlan) { SpeechRecognition.startListening({ continuous: false, language: "es-AR" }); }
+  }, [recording, listening]);
 
-  //   if (messages.length && messages[messages.length - 1].type === 'NP_AI' && !endPlan) {
-  //     const latestMessage = messages[messages.length - 1].content;
-
-  //     if (latestMessage !== lastProcessedMessage.current) {
-  //       handleSpeech();
-  //       lastProcessedMessage.current = latestMessage;
-  //     }
-  //   }
-  // }, [messages]);
-
-  // useEffect(() => {
-
-  //   // verifica que esten los datos en localStorage
-  //   // if (!messages || !messages.length) {
-  //   //   dispatch(compareMessages())
-  //   // }
-  //   //si el ultimo msj es de IA que lo lea    
-  //   if (messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan) {
-  //     console.log("se envia handleSpeech");
-  //     // handleSpeech()
-  //   }
-  //   //Pasa a audio cuando el ultimo msj del array es de la IA
-  //   if (isMounted.current) {
-  //     isMounted.current = false;
-  //     return;
-  //   }
-  // }, [messages]);
+  useEffect(() => {
+    // verifica que esten los datos en localStorage
+    if (!messages || !messages.length) {
+      dispatch(compareMessages())
+    }
+    if (messages.length && messages[messages.length - 1].type === 'NP_AI' && !endPlan && messages.length == 1) {
+      const latestMessage = messages[messages.length - 1].content;
+      if (latestMessage !== lastProcessedMessage.current) {
+        console.log("se envia handleSpeech 1");
+        handleSpeech();
+        lastProcessedMessage.current = latestMessage;
+      }
+    }
+    if (messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan && messages.length > 2) {
+      console.log("se envia handleSpeech 2");
+      handleSpeech()
+    }
+  }, [messages]);
 
   const handleReset = () => {
     resetTranscript();

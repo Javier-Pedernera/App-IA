@@ -12,13 +12,11 @@ import store from "./Redux/Store/Store";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/* <ThemeProvider> */}
       <Provider store={store}>
         <RouterProvider router={router}>
-        <Layout/>
+        {/* <Layout/> */}
           {/* <Landing /> */}
         </RouterProvider>
       </Provider>
-    {/* </ThemeProvider> */}
   </React.StrictMode>
 )
