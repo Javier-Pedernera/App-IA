@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
             element: <Landing />
         },
         {
-            path: "/home/:storedThreadId",
+            path: "/home",
             element: <Home />
         },
         {
