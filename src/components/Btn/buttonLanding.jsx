@@ -52,19 +52,19 @@ export default function ButtonLanding({ UserID }) {
           //cargo el usuario al estado
           dispatch(getUserData(user));
 
-          const newstoredThreadId = user.threadId.slice('thread_'.length);
-          console.log("if", newstoredThreadId);
+          // const newstoredThreadId = user.threadId.slice('thread_'.length);
+          // console.log("if", newstoredThreadId);
           setAnimating(false);
-          navigate(`/home/${newstoredThreadId}`);
+          navigate(`/home`);
         }, 1000);
       } else {
-        const storedThreadId = await JSON.parse(Cookies.get('user'));
+        // const storedThreadId = await JSON.parse(Cookies.get('user'));
         if (storedThreadId) {
-          console.log("else", storedThreadId);
-          const newstoredThreadId = storedThreadId.slice('thread_'.length);
+          // console.log("else", storedThreadId);
+          // const newstoredThreadId = storedThreadId.slice('thread_'.length);
 
           setAnimating(false);
-          navigate(`/home/${newstoredThreadId}`);
+          navigate(`/home`);
         }
 
 
