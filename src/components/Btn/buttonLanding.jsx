@@ -24,15 +24,15 @@ export default function ButtonLanding({ UserID }) {
       //ID del usuario cuando este registrado
       if (!Object.keys(actualUser).length) {
 
-        // const response = await axios.post(`${URL}/plan`, UserID);
-        const data ={
-         message: "¡Hola! Para comenzar a elaborar tu plan nutricional, necesitaré hacerte algunas preguntas. Empecemos:\n\n¿Cuál es tu nombre?",
-        thread_id: "thread_7QffFW7XGFyTc56woWPZqOt6",
-        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoiSmF2aWVyMTk4MSIsInRocmVhZF9pZCI6InRocmVhZF83UWZmRlc3WEdGeVRjNTZ3b1dQWnFPdDYiLCJleHAiOjE3MDYzNjI0NzF9.0evkN4aDwxG7B9Dnqc-CiJXYxAG-nVQmfZZIPVWM4cc" 
-        }
-        const response = {
-          data
-        }
+        const response = await axios.post(`${URL}/plan`, UserID);
+        // const data ={
+        //  message: "¡Hola! Para comenzar a elaborar tu plan nutricional, necesitaré hacerte algunas preguntas. Empecemos:\n\n¿Cuál es tu nombre?",
+        // thread_id: "thread_7QffFW7XGFyTc56woWPZqOt6",
+        // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoiSmF2aWVyMTk4MSIsInRocmVhZF9pZCI6InRocmVhZF83UWZmRlc3WEdGeVRjNTZ3b1dQWnFPdDYiLCJleHAiOjE3MDYzNjI0NzF9.0evkN4aDwxG7B9Dnqc-CiJXYxAG-nVQmfZZIPVWM4cc" 
+        // }
+        // const response = {
+        //   data
+        // }
         //       console.log(response); 
         const user = {
           threadId: response.data.thread_id,
