@@ -84,7 +84,7 @@ const MicrophoneVisualizer = () => {
   const handleReset = () => {
     resetTranscript();
     dispatch(Out())
-    navigate(`/home/${newstoredThreadId}`);
+    navigate(`/home`);
   };
   const handleStop = () => {
     setRecording(false);
