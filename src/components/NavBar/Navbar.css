@@ -2,11 +2,11 @@
   width: 100%;
   font-size: 14px;
 }
-/* @media screen and (max-width: 500px) {
+@media screen and (max-width: 500px) {
   .userEmail {
-   margin-top: 20px;
+   font-size: small;
   }
-} */
+}
 .selectDiv{
   min-width: 200px;
 display: flex;
@@ -32,6 +32,13 @@ font-weight: 500;
   text-decoration: none;
   font-size: medium;
   margin: 10px;
+  
+}
+@media screen and (max-width: 510px) {
+    .navbar__brand {
+      width: 35%;
+      
+    }
 }
 
 .navbar__logo {
@@ -57,11 +64,13 @@ align-content: center;
 }
 @media screen and (max-width: 500px) {
   .navbar__voice-select {
+    font-size: small;
     flex-direction:  column-reverse;
     align-items: flex-start;
     margin-left: 10%;
-    width: 150px;
+    width: 40%;
     margin-right: 30px;
+    text-align-last: center;
   }
 }
 .titleSelect {
@@ -114,7 +123,12 @@ align-content: center;
   height: 30px;
   margin-top: -7px;
 }
-
+@media screen and (max-width: 510px) {
+  .ico_out {
+    width: 15px;
+    margin: 0px;
+  }
+}
 .navbar__voice-select::after {
   font-size: medium;
   margin-left: 100px;

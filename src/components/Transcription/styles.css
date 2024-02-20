@@ -16,10 +16,39 @@
     width: 95%;
     margin-left: 15px;
     margin-top: inherit;
-    height: 65%;
+    height: 55%;
   }
 }
-
+@media screen and (max-height:900px) {
+  .allcontent {
+    height: 60%;
+  }
+}
+@media screen and (min-width: 700px) and (max-width: 830px) {
+  .allcontent {
+    height: 90%;
+  }
+}
+@media screen and (min-width: 640px) and (max-width: 710px) {
+  .allcontent {
+    height: 50%;
+  }
+}
+@media screen  and (max-width: 340px) {
+  .allcontent {
+    height: 45%;
+  }
+}
+@media screen and (min-width: 345px) and (max-width: 630px) {
+  .allcontent {
+    height: 50%;
+  }
+}
+@media screen and (max-height: 667px) {
+  .allcontent {
+    height: 40%;
+  }
+}
 .content_message {
   display: flex;
   flex-direction: row;

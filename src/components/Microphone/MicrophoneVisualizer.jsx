@@ -44,7 +44,7 @@ const MicrophoneVisualizer = () => {
   console.log("loadingMsgAI", loadinMsg);
 
   useEffect(() => {
-    if (finalTranscript !== '' && finalTranscript !== true && !endPlan) {
+    if (finalTranscript !== '' && finalTranscript !== true) {
       SpeechRecognition.stopListening();
       setLoadingMsg(true)
       const userResponse = {
@@ -63,6 +63,7 @@ const MicrophoneVisualizer = () => {
 
   useEffect(() => {
     if (messages.length && messages[messages.length - 1].content === "Gracias por contestar las preguntas. Su plan nutricicional le llegará por e-mail") {
+      console.log("entro a handlestop");
       handleStop()
     }
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
@@ -80,7 +81,7 @@ const MicrophoneVisualizer = () => {
       console.log("speechRecognitio if", SpeechRecognition);
       // SpeechRecognition.startListening({ continuous: false, language: "es-AR" }); 
     }
-  }, [recording, listening]);
+  }, [recording]);
 
   useEffect(() => {
     // verifica que esten los datos en localStorage
@@ -104,9 +105,12 @@ const MicrophoneVisualizer = () => {
   }, [messages]);
 
   const handleReset = () => {
-    resetTranscript();
-    dispatch(Out())
-    navigate(`/home`);
+    console.log("en reset");
+    localStorage.removeItem("storedMessages");
+    stopListening()
+    dispatch(getOut())
+    dispatch(getUser({}))
+    navigate(`/landing`);
   };
   const handleStop = () => {
     setRecording(false);
