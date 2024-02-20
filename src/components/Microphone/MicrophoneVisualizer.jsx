@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { AudioVisualizer } from 'react-audio-visualize';
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
+import WaveSurfer from 'wavesurfer.js';
 
 const MicrophoneVisualizer = () => {
   const {
@@ -35,7 +36,7 @@ const MicrophoneVisualizer = () => {
   const dispatch = useDispatch();
   const lastProcessedMessage = useRef(null);
   const [transcriptText, settranscriptText] = useState(true);
-
+  const wavesurferRef = useRef(null);
   console.log("listening.length", listening.length);
   console.log("listening", listening);
   console.log("recording", recording);
@@ -107,7 +108,7 @@ const MicrophoneVisualizer = () => {
   const handleReset = () => {
     console.log("en reset");
     localStorage.removeItem("storedMessages");
-    stopListening()
+    // stopListening()
     dispatch(getOut())
     dispatch(getUser({}))
     navigate(`/landing`);
@@ -125,16 +126,47 @@ const MicrophoneVisualizer = () => {
       const response = await textToSpeech(lastMessage, selectedVoice.length ? selectedVoice : "nova");
       if (response) {
         setLoadingMsg(false);
-        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const url = await window.URL.createObjectURL(new Blob([response.data]));
+        console.log(url);
 
-        const audio = new Audio(url);
-        await new Promise((resolve) => {
-          audio.addEventListener('ended', () => {
-            resolve();
-          });
-          audio.play();
+        if (wavesurferRef.current) {
+          // Si ya existe una instancia de Wavesurfer, la destruye antes de crear una nueva
+          wavesurferRef.current.destroy();
+        }
+        const wavesurfer = WaveSurfer.create({
+          container: '#waveform',
+          waveColor: '#5ce1e6',
+          progressColor: '#3FB5E4',
+          autoScroll: true,
+          barRadius: 4,
+          cursorColor: '#f1c536b3',
+          cursorWidth: 2,
+          responsive: true,
+          barWidth: 5,
+          barGap: 1.5,
+          autoplay: true,
+          hideScrollbar: true,
+          height: 100
         });
-        setRecording(true);
+        wavesurferRef.current = wavesurfer;
+
+        await wavesurfer.load(url);
+        console.log(wavesurfer.on);
+        // wavesurfer.on('interaction', () => {
+        //   console.log("reproducir");
+        //   wavesurfer.play();
+        // });
+        // Esperar a que termine el audio
+        wavesurfer.on('finish', () => {
+          console.log("Audio terminado de reproducir");
+          setRecording(true);
+        });
+        wavesurfer.on('pause', function () {
+          wavesurfer.params.container.style.opacity = 0.9;
+        });
+        wavesurfer.on('error', (err) => {
+          console.error("Error en Wavesurfer:", err);
+        });
 
       }
     } catch (error) {
@@ -159,6 +191,10 @@ const MicrophoneVisualizer = () => {
                   <img src={hablaUser} alt="Usuario hablando" style={{ maxWidth: '300px', width: '40%', height: '40%' }} /> :
                   <img src={hablaAI} alt="AI hablando" style={{ maxWidth: '300px', width: '40%', height: '40%' }} />)
             }
+            <div className='waveStyle'>
+              <div id="waveform" style={{ width: '100%', marginBottom: "20px", height: '80px' }}></div>
+            </div>
+
             {listening ?
               <Button
                 style={{

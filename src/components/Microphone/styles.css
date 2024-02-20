@@ -138,3 +138,9 @@ height: 100%;
     align-items: center;
   }
 }
+
+.waveStyle{
+  height: 90px;
+  width: 300px;
+  margin-bottom: 40px;
+}
