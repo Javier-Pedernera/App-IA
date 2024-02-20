@@ -18,6 +18,7 @@
 .BrainImg{
 width: 40%;
 height: 40%;
+max-width: 300px;
 }
 @media screen and (max-width: 710px) {
   .BrainImg {
@@ -72,4 +73,38 @@ align-items: center;
     margin-left:10px;
   }
 }
-  
+.wave{
+  width: 90%;
+}
+
+.btn_transcript{
+  margin-top: 10px;
+  height: 90%;
+  width: 25px;
+  background-color: transparent ;
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+  margin-right: 5px;
+  &:hover{
+    background-color: #5ce1e61b;
+  }
+}
+
+.arrow{
+  color: #4470b6b7;
+  display: none;
+  width: 30px;
+  height: 40px;
+}
+
+.btn_transcript:hover .arrow {
+  display: block;
+}
+
+.content_transcrip{
+  display: flex;
+  flex-direction: row;
+width: 100%;
+height: 100%;
+}

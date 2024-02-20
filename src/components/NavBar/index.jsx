@@ -114,7 +114,7 @@ const Navbar = () => {
         <img src={logo} alt="NutriPlan AI" className="navbar__logo" />
       </Link>
       <div className="navbar__voice-select">
-        <div className='selectDiv'>
+        {/* <div className='selectDiv'>
           <Select
             // isClearable={true}
             isSearchable={true}
@@ -123,14 +123,14 @@ const Navbar = () => {
             onChange={handleVoiceChange}
             options={voices.map((sup) => ({ label: sup, value: sup }))}
           />
-          <div title="Voz" className='div_ico_voz'><MdVoiceChat className='icono_voz' /></div></div>
+          <div title="Voz" className='div_ico_voz'><MdVoiceChat className='icono_voz' /></div></div> */}
 
 
         {Object.keys(userActive).length ?
           <div className='userEmail'>{user}<button title="Salir" onClick={handleOut} className='btn_out'>
             <FaSignOutAlt className='ico_out' /></button></div>
           : <div>
-            <Link to="/" className="navbar__brand"><div className='userEmail'>Ingresa</div></Link> </div>}
+            <Link to="/" className="navbar__brand"><div className='userEmail'>Log in</div></Link> </div>}
 
       </div>
 

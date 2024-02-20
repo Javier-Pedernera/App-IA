@@ -4,12 +4,14 @@ import { useState } from "react";
 import { FormControl, InputGroup } from "react-bootstrap";
 // import Form from 'react-bootstrap/Form';
 import './styles.css';
+import Loader from "../Loader/Loader.jsx";
 
 export default function Landing() {
 
     const [username, setUsername] = useState('');
     const [isValidEmail, setValidEmail] = useState(true);
-    // console.log(isValidEmail);
+    const [loading, setLoading] = useState(false);
+    console.log(loading);
     const validateEmail = (email) => {
         // Expresión regular para validar un correo electrónico
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -30,8 +32,9 @@ export default function Landing() {
         }
     };
     return (
-        <>
-            <div style={{ display: "flex", flexDirection: "column", height: "100%", width: "100%", alignItems: "center" }}>
+
+        loading ? (<div style={{ display: "flex", flexDirection: "column", height: "100%", width: "100%", alignItems: "center" }}><Loader></Loader></div>) : (
+            <><div >
                 <div style={{ display: "flex", height: "100%", width: "100%", alignItems: "center", flexDirection: "column", justifyContent: "center" }}>
                     <img src={logoApp} alt="NutriPlan AI" style={{ width: "auto", height: "30%" }} />
                     <div className="div_input">
@@ -51,11 +54,13 @@ export default function Landing() {
                         {!isValidEmail ? <div className="invalidateEmail">"Ingresa un email válido"</div> : <div></div>}
                     </div>
                     <div style={{ marginTop: "30px" }}>
-                        <ButtonLanding UserID={userId} />
+                        <ButtonLanding UserID={userId} setLoader={setLoading} />
                     </div>
 
                 </div>
             </div>
-        </>
+            </>)
+
+
     )
 }

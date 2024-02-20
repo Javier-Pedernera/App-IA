@@ -1,5 +1,5 @@
 .userEmail {
-  width: 30%;
+  width: 100%;
   font-size: 14px;
 }
 /* @media screen and (max-width: 500px) {
@@ -46,7 +46,7 @@ font-weight: 500;
 }
 
 .navbar__voice-select {
-  width: 70%;
+  /* width: 70%; */
   font-size: medium;
   margin-right: 10px;
   color: #fefefa;
