@@ -3,27 +3,24 @@ import './buttonLanding.css';
 import { useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from '../../Redux/Actions/UserSlice';
 import axios from 'axios';
 import { getUserData } from '../../Redux/Actions/UserGet';
 import { addMessage } from '../../Redux/Actions/MessageGet';
-import { Form } from 'react-bootstrap';
 
-export default function ButtonLanding({ UserID }) {
+export default function ButtonLanding({ UserID, setLoader }) {
   const actualUser = useSelector((state) => state.user.userData);
   const [isAnimating, setAnimating] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const URL = import.meta.env.VITE_API_URL
-
+  console.log(isAnimating);
 
   const handleClick = async () => {
     setAnimating(true);
-    // console.log(Us);
     try {
       //ID del usuario cuando este registrado
       if (!Object.keys(actualUser).length) {
-
+        setLoader(true)
         const response = await axios.post(`${URL}/plan`, UserID);
         // const data = {
         //   message: "¡Hola! Para comenzar a elaborar tu plan nutricional, necesitaré hacerte algunas preguntas. Empecemos:\n\n¿Cuál es tu nombre?",
@@ -46,28 +43,18 @@ export default function ButtonLanding({ UserID }) {
         Cookies.set('user', JSON.stringify(user), { expires: expirationDate });
         Cookies.set('userEmail', UserID.usuario_id, { expires: expirationDate });
         setTimeout(() => {
-          // mensaje de bienvenida al estado global
-          const message = { type: 'NP_AI', content: user.message, timestamp: new Date().toString() }
-          dispatch(addMessage(message))
-          //cargo el usuario al estado
-          dispatch(getUserData(user));
-
-          // const newstoredThreadId = user.threadId.slice('thread_'.length);
-          // console.log("if", newstoredThreadId);
-          setAnimating(false);
-          navigate(`/home`);
-        }, 1000);
+        // mensaje de bienvenida al estado global
+        const message = { type: 'NP_AI', content: user.message, timestamp: new Date().toString() }
+        dispatch(addMessage(message))
+        //cargo el usuario al estado
+        dispatch(getUserData(user));
+        setLoader(false)
+        setAnimating(false);
+        navigate(`/home`);
+        }, 200);
       } else {
-        // const storedThreadId = await JSON.parse(Cookies.get('user'));
-        // if (storedThreadId) {
-          // console.log("else", storedThreadId);
-          // const newstoredThreadId = storedThreadId.slice('thread_'.length);
-
-          setAnimating(false);
-          navigate(`/home`);
-        // }
-
-
+        setAnimating(false);
+        navigate(`/home`);
       }
     } catch (error) {
       console.error('Error al obtener el thread_id:', error);

@@ -21,7 +21,9 @@ const responseUser = (data) => {
 
 			// usando api OpenAI
 			const response = await axios.post(`${URL}/preguntas`, data);
+			console.log(response);
 			const msj = { type: 'NP_AI', content: response.data.message, timestamp: new Date().toString(), thread_id: response.data.thread_id }
+			console.log(msj);
 			await addMessageToLocalStorage(msj)
 			return dispatch(messageAI(msj));
 
@@ -133,6 +135,6 @@ export {
 // 	},
 // 	{"message": "Gracias por contestar las preguntas. Su plan nutricicional le llegará por e-mail",
 // 	"thread_id": "thread_Q4MOLg8Ho8JYeiFQZTcfz6Bs",
-// 	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoiMTIzIiwidGhyZWFkX2lkIjoidGhyZWFkX1E0TU9MZzhIbzhKWWVpRlFaVGNmejZCcyIsImV4cCI6MTcwNjAxMDY2NX0.KXRZjKU1vvL9Bfo9TdcxqnNGgNanzkyOCkWFUtswB3Y"}	
+// 	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoiMTIzIiwidGhyZWFkX2lkIjoidGhyZWFkX1E0TU9MZzhIbzhKWWVpRlFaVGNmejZCcyIsImV4cCI6MTcwNjAxMDY2NX0.KXRZjKU1vvL9Bfo9TdcxqnNGgNanzkyOCkWFUtswB3Y"}
 // ]}
 // let currentIndex = 0;
