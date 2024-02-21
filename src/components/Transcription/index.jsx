@@ -34,7 +34,7 @@ const Transcription = ({ textoTranscripcion, loader }) => {
                 <img src={image_NP} alt="NutriPlan" className='image_NPlan' />
               )}
               {loader ? (
-                <div className="loader"></div>
+                <div className="loader"> </div>
               ) : (
                 <div className={`globo${mensaje?.type?.length}`} as="li">
                   {mensaje.content}

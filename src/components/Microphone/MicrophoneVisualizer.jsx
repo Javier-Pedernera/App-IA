@@ -15,6 +15,10 @@ import { AudioVisualizer } from 'react-audio-visualize';
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import WaveSurfer from 'wavesurfer.js';
+import RecordPlugin from 'wavesurfer.js/dist/plugins/record.esm.js'
+import { getOut } from '../../Redux/Actions/MessageSlice';
+import { getUser } from '../../Redux/Actions/UserSlice';
+import Cookies from 'js-cookie';
 
 const MicrophoneVisualizer = () => {
   const {
@@ -31,18 +35,53 @@ const MicrophoneVisualizer = () => {
   const selectedVoice = useSelector((state) => state.messages.selectedVoice);
   const messages = useSelector((state) => state.messages.messages);
   const [recording, setRecording] = useState(false);
-  const [loadinMsg, setLoadingMsg] = useState(false);
+  const [loadingMsg, setLoadingMsg] = useState(false);
   const [endPlan, setEndPlan] = useState(false);
   const dispatch = useDispatch();
   const lastProcessedMessage = useRef(null);
   const [transcriptText, settranscriptText] = useState(true);
   const wavesurferRef = useRef(null);
+  const [wavesurfer, setWaveSurfer] = useState(null);
+  let wavesurferMicRef = useRef(null);
+
   console.log("listening.length", listening.length);
   console.log("listening", listening);
   console.log("recording", recording);
   console.log("messages", messages);
   console.log("finaltranscript", finalTranscript);
-  console.log("loadingMsgAI", loadinMsg);
+  console.log("loadingMsgAI", loadingMsg);
+
+  useEffect(() => {
+    if (wavesurferMicRef.current) {
+      wavesurferMicRef.current.destroy();
+    }
+
+    if (recording) {
+      const wavesurferMic = WaveSurfer.create({
+        container: '#waveform',
+        waveColor: '#3FB5E4',
+        progressColor: '#f1c536b3',
+        barRadius: 4,
+        responsive: true,
+        barWidth: 5,
+        barGap: 1.5,
+      });
+
+      // Inicializa el plugin del micrófono
+      const micPlugin = wavesurferMic.registerPlugin(RecordPlugin.create())
+
+      // Habilita el micrófono
+      micPlugin.startRecording();
+
+      // Asigna la referencia actual de wavesurferMic a wavesurferMicRef
+      wavesurferMicRef.current = wavesurferMic;
+
+      // Manejo de errores del micrófono
+      micPlugin.on('deviceError', function (code) {
+        console.warn('Device error: ' + code);
+      });
+    }
+  }, [recording, finalTranscript]);
 
   useEffect(() => {
     if (finalTranscript !== '' && finalTranscript !== true) {
@@ -106,12 +145,16 @@ const MicrophoneVisualizer = () => {
   }, [messages]);
 
   const handleReset = () => {
+    SpeechRecognition.stopListening();
     console.log("en reset");
+    Cookies.remove('user');
+    Cookies.remove('userEmail');
+    localStorage.removeItem('storedMessages');
     localStorage.removeItem("storedMessages");
-    // stopListening()
     dispatch(getOut())
     dispatch(getUser({}))
     navigate(`/landing`);
+
   };
   const handleStop = () => {
     setRecording(false);
@@ -149,15 +192,14 @@ const MicrophoneVisualizer = () => {
           height: 100
         });
         wavesurferRef.current = wavesurfer;
-
         await wavesurfer.load(url);
-        console.log(wavesurfer.on);
-        // wavesurfer.on('interaction', () => {
-        //   console.log("reproducir");
-        //   wavesurfer.play();
-        // });
-        // Esperar a que termine el audio
+        // // wavesurfer.on('interaction', () => {
+        // //   console.log("reproducir");
+        // //   wavesurfer.play();
+        // // });
+        // // Esperar a que termine el audio
         wavesurfer.on('finish', () => {
+          wavesurfer.destroy();
           console.log("Audio terminado de reproducir");
           setRecording(true);
         });
@@ -192,10 +234,10 @@ const MicrophoneVisualizer = () => {
                   <img src={hablaAI} alt="AI hablando" style={{ maxWidth: '300px', width: '40%', height: '40%' }} />)
             }
             <div className='waveStyle'>
-              <div id="waveform" style={{ width: '100%', marginBottom: "20px", height: '80px' }}></div>
+               <div id="waveform">{loadingMsg ? <div className='loadercontainer'> <div className="loaderAudio"> </div></div>:null}</div> 
             </div>
 
-            {listening ?
+            {/* {listening ?
               <Button
                 style={{
                   width: '40%',
@@ -205,10 +247,10 @@ const MicrophoneVisualizer = () => {
                   overflow: 'hidden',
                 }} variant="danger" onClick={handleStop} disabled={!listening}>
                 Stop Listening
-              </Button> : <div></div>}
+              </Button> : <div></div>} */}
             <Button className='btnReset'
               variant="warning" onClick={handleReset}>
-              Leave and reset conversation
+              Abandonar conversación
             </Button>
 
             <div id="recordings" style={{ margin: '1rem 0' }}></div>
@@ -220,7 +262,7 @@ const MicrophoneVisualizer = () => {
             <div className='btn_transcript' onClick={handleTranscripText}>
               <RiArrowRightSLine className='arrow' />
             </div>
-            <Transcription textoTranscripcion={messages} loader={loadinMsg} />
+            <Transcription textoTranscripcion={messages} loader={loadingMsg} />
           </div> : <div className='btn_transcript' onClick={handleTranscripText}>
             <RiArrowLeftSLine className='arrow' />
           </div>
