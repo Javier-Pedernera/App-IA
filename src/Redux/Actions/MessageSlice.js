@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     messages: [],
-    selectedVoice: ''
+    selectedVoice: '',
+    selectedLanguage: {}
 };
 
 const Slice = createSlice({
@@ -34,6 +35,14 @@ const Slice = createSlice({
                 selectedVoice: action.payload,
             }
         },
+        selectLanguage: (state, action) => {
+            console.log(action.payload);
+            return {
+                ...state,
+                selectedLanguage: action.payload,
+            }
+        },
+
         getOut: (state, action) => {
             return {
                 ...state,
@@ -43,5 +52,5 @@ const Slice = createSlice({
     }
 });
 
-export const { compare, messageAI, selectVoice, messageAdded, getOut } = Slice.actions;
+export const { compare, messageAI, selectVoice, messageAdded, getOut, selectLanguage } = Slice.actions;
 export default Slice.reducer;

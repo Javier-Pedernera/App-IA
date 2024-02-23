@@ -30,6 +30,9 @@
   &:active {
     box-shadow: -4px 4px 24px rgba(0, 0, 0, 0.8);
   }
+  &:disabled{
+    background-color: #38b2e3a3;
+  }
 }
 
 .btn .text {

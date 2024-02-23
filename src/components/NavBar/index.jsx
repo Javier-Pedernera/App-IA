@@ -5,21 +5,25 @@ import Form from 'react-bootstrap/Form';
 import './Navbar.css';
 import logo from '../../assets/logo2.png';
 import { getOut, selectVoice } from '../../Redux/Actions/MessageSlice';
-const voices = ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer'];
+
 import { MdVoiceChat } from "react-icons/md";
 import { FaSignOutAlt } from "react-icons/fa";
 import { getUser } from '../../Redux/Actions/UserSlice';
 import Cookies from 'js-cookie';
 import Select from 'react-select'
-import { voiceSelected } from '../../Redux/Actions/MessageGet';
+import { languageSelected, voiceSelected } from '../../Redux/Actions/MessageGet';
+import LanguageSelector from '../SelectLanguage/LanguageSelector';
+
+const voices = ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer'];
+
 
 const Navbar = () => {
   const selectedVoice = useSelector((state) => state.messages.selectedVoice);
+  const selectedLanguage = useSelector((state) => state.messages.selectedLanguage);
   const userActive = useSelector((state) => state.user.userData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState(null);
-
   const user = Cookies.get('userEmail');
 
   useEffect(() => {
@@ -99,6 +103,8 @@ const Navbar = () => {
   const handleVoiceChange = ({ value }) => {
     dispatch(voiceSelected(value));
   };
+
+
   const handleOut = () => {
     Cookies.remove('user');
     Cookies.remove('userEmail');
@@ -107,6 +113,7 @@ const Navbar = () => {
     dispatch(getUser({}))
     navigate(`/landing`);
   }
+  console.log(selectedLanguage);
 
   return (
     <nav className="navbar">
@@ -124,14 +131,20 @@ const Navbar = () => {
             options={voices.map((sup) => ({ label: sup, value: sup }))}
           />
           <div title="Voz" className='div_ico_voz'><MdVoiceChat className='icono_voz' /></div></div> */}
+        <div className='selectDiv'>
+          {Object.keys(userActive).length ?
+            //  <LanguageSelector/>
+            <div>{selectedLanguage ? selectedLanguage.name : ""}</div>
+            : <div></div>
+          }
 
+        </div>
 
         {Object.keys(userActive).length ?
           <div className='userEmail'>{user}<button title="Salir" onClick={handleOut} className='btn_out'>
             <FaSignOutAlt className='ico_out' /></button></div>
           : <div>
-            <Link to="/" className="navbar__brand"><div className='userEmail'>Log in</div></Link> </div>}
-
+            <Link to="/" className="navbar__brand"><div className='userEmail'>Ingresa tu email</div></Link> </div>}
       </div>
 
     </nav>

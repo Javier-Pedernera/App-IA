@@ -33,6 +33,7 @@ const MicrophoneVisualizer = () => {
   const navigate = useNavigate();
   const actualUser = useSelector((state) => state.user.userData);
   const selectedVoice = useSelector((state) => state.messages.selectedVoice);
+  const selectedLanguage = useSelector((state) => state.messages.selectedLanguage).code;
   const messages = useSelector((state) => state.messages.messages);
   const [recording, setRecording] = useState(false);
   const [loadingMsg, setLoadingMsg] = useState(false);
@@ -43,13 +44,15 @@ const MicrophoneVisualizer = () => {
   const wavesurferRef = useRef(null);
   const [wavesurfer, setWaveSurfer] = useState(null);
   let wavesurferMicRef = useRef(null);
+  const languageActual = selectedLanguage == "es-ES" ? "es-AR" : selectedLanguage
 
-  console.log("listening.length", listening.length);
-  console.log("listening", listening);
-  console.log("recording", recording);
-  console.log("messages", messages);
-  console.log("finaltranscript", finalTranscript);
-  console.log("loadingMsgAI", loadingMsg);
+  console.log("selectedLanguage", selectedLanguage);
+  // console.log("listening.length", listening.length);
+  // console.log("listening", listening);
+  // console.log("recording", recording);
+  // console.log("messages", messages);
+  // console.log("finaltranscript", finalTranscript);
+  // console.log("loadingMsgAI", loadingMsg);
 
   useEffect(() => {
     if (wavesurferMicRef.current) {
@@ -66,17 +69,9 @@ const MicrophoneVisualizer = () => {
         barWidth: 5,
         barGap: 1.5,
       });
-
-      // Inicializa el plugin del micrófono
       const micPlugin = wavesurferMic.registerPlugin(RecordPlugin.create())
-
-      // Habilita el micrófono
       micPlugin.startRecording();
-
-      // Asigna la referencia actual de wavesurferMic a wavesurferMicRef
       wavesurferMicRef.current = wavesurferMic;
-
-      // Manejo de errores del micrófono
       micPlugin.on('deviceError', function (code) {
         console.warn('Device error: ' + code);
       });
@@ -102,15 +97,18 @@ const MicrophoneVisualizer = () => {
   }, [finalTranscript]);
 
   useEffect(() => {
-    if (messages.length && messages[messages.length - 1].content === "Gracias por contestar las preguntas. Su plan nutricicional le llegará por e-mail") {
+    if (messages.length && messages[messages.length - 1].content === "Gracias por contestar las preguntas. Su plan nutricional le llegará por e-mail") {
       console.log("entro a handlestop");
       handleStop()
     }
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
       return null
     }
+
     if (listening == false && recording == true && !endPlan) {
+      console.log("languageActual en if listening", languageActual);
       SpeechRecognition.startListening({
+        // language: { languageActual },
         continuous: true,
         interimResults: true,
         maxAlternatives: 3,
@@ -131,14 +129,14 @@ const MicrophoneVisualizer = () => {
     if (messages.length && messages[messages.length - 1].type === 'NP_AI' && !endPlan && messages.length == 1) {
       const latestMessage = messages[messages.length - 1].content;
       if (latestMessage !== lastProcessedMessage.current) {
-        console.log("se envia handleSpeech 1");
+        // console.log("se envia handleSpeech 1");
         setLoadingMsg(true)
         handleSpeech();
         lastProcessedMessage.current = latestMessage;
       }
     }
     if (messages.length && messages[messages.length - 1].type == 'NP_AI' && !endPlan && messages.length > 2) {
-      console.log("se envia handleSpeech 2");
+      // console.log("se envia handleSpeech 2");
       setLoadingMsg(true)
       handleSpeech()
     }
@@ -203,9 +201,10 @@ const MicrophoneVisualizer = () => {
           console.log("Audio terminado de reproducir");
           setRecording(true);
         });
-        wavesurfer.on('pause', function () {
-          wavesurfer.params.container.style.opacity = 0.9;
-        });
+        console.log("wavesurfer para ver props", wavesurfer);
+        // wavesurfer.on('pause', function () {
+        //   wavesurfer.params.container.style.opacity = 0.9;
+        // });
         wavesurfer.on('error', (err) => {
           console.error("Error en Wavesurfer:", err);
         });
@@ -234,7 +233,7 @@ const MicrophoneVisualizer = () => {
                   <img src={hablaAI} alt="AI hablando" style={{ maxWidth: '300px', width: '40%', height: '40%' }} />)
             }
             <div className='waveStyle'>
-               <div id="waveform">{loadingMsg ? <div className='loadercontainer'> <div className="loaderAudio"> </div></div>:null}</div> 
+              <div id="waveform">{loadingMsg ? <div className='loadercontainer'> <div className="loaderAudio"> </div></div> : null}</div>
             </div>
 
             {/* {listening ?

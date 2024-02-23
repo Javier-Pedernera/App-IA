@@ -32,7 +32,8 @@ font-weight: 500;
   text-decoration: none;
   font-size: medium;
   margin: 10px;
-  
+  margin-left: 30px;
+  margin-right: 30px;
 }
 @media screen and (max-width: 510px) {
     .navbar__brand {
@@ -55,20 +56,21 @@ font-weight: 500;
 .navbar__voice-select {
   /* width: 70%; */
   font-size: medium;
-  margin-right: 10px;
+  margin-right: 10%;
   color: #fefefa;
   display: flex;
 justify-content: flex-end;
 align-content: center;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
 }
 @media screen and (max-width: 500px) {
   .navbar__voice-select {
     font-size: small;
-    flex-direction:  column-reverse;
-    align-items: flex-start;
+
+    /* flex-direction:  column-reverse; */
+    align-items: center;
     margin-left: 10%;
-    width: 40%;
+    width: 100%;
     margin-right: 30px;
     text-align-last: center;
   }
