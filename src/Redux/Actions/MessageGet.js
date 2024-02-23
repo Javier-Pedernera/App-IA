@@ -1,5 +1,5 @@
 import { addMessageToLocalStorage, getMessagesFromLocalStorage } from "../../utils/localStorage";
-import { messageAI, getOut, selectVoice, messageAdded, compare } from "./MessageSlice";
+import { messageAI, getOut, selectVoice, messageAdded, compare, selectLanguage } from "./MessageSlice";
 import axios from "axios";
 
 
@@ -63,8 +63,18 @@ const addMessage = (msj) => {
 const voiceSelected = (voice) => {
 	return async (dispatch) => {
 		try {
-			;
 			return dispatch(selectVoice(voice));
+		} catch (error) {
+			alert({ error: error.message });
+		}
+	};
+};
+
+//Eleccion de voces
+const languageSelected = (language) => {
+	return async (dispatch) => {
+		try {
+			return dispatch(selectLanguage(language));
 		} catch (error) {
 			alert({ error: error.message });
 		}
@@ -82,7 +92,7 @@ const Out = () => {
 };
 
 export {
-	compareMessages, responseUser, voiceSelected, addMessage, Out
+	compareMessages, responseUser, voiceSelected, languageSelected, addMessage, Out
 }
 
 // JSON A ENVIAR
