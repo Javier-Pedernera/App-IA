@@ -44,9 +44,10 @@ const MicrophoneVisualizer = () => {
   const wavesurferRef = useRef(null);
   const [wavesurfer, setWaveSurfer] = useState(null);
   let wavesurferMicRef = useRef(null);
-  const languageActual = selectedLanguage == "es-ES" ? "es-AR" : selectedLanguage
+  console.log(selectedLanguage);
+  const languageActual = Object.keys(selectedLanguage).length && selectedLanguage.code == "es-ES" ? "es-AR" : selectedLanguage.code
 
-  console.log("selectedLanguage", selectedLanguage);
+  // console.log("selectedLanguage", selectedLanguage);
   // console.log("listening.length", listening.length);
   // console.log("listening", listening);
   // console.log("recording", recording);
@@ -87,7 +88,7 @@ const MicrophoneVisualizer = () => {
         respuesta: finalTranscript
       }
       const messageUser = { type: 'user', content: finalTranscript, timestamp: new Date().toString() }
-      console.log("data de la transcripcion", userResponse);
+      // console.log("data de la transcripcion", userResponse);
       dispatch(addMessage(messageUser))
       dispatch(responseUser(userResponse))
       setRecording(false)
@@ -106,9 +107,9 @@ const MicrophoneVisualizer = () => {
     }
 
     if (listening == false && recording == true && !endPlan) {
-      console.log("languageActual en if listening", languageActual);
+      // console.log("languageActual en if listening", languageActual);
       SpeechRecognition.startListening({
-        // language: { languageActual },
+        language: languageActual,
         continuous: true,
         interimResults: true,
         maxAlternatives: 3,
@@ -116,7 +117,7 @@ const MicrophoneVisualizer = () => {
         // Aumenta la sensibilidad de cuando el usuario habla
         vad: "aggressive"
       })
-      console.log("speechRecognitio if", SpeechRecognition);
+      // console.log("speechRecognitio if", SpeechRecognition);
       // SpeechRecognition.startListening({ continuous: false, language: "es-AR" }); 
     }
   }, [recording]);
@@ -149,6 +150,7 @@ const MicrophoneVisualizer = () => {
     Cookies.remove('userEmail');
     localStorage.removeItem('storedMessages');
     localStorage.removeItem("storedMessages");
+    dispatch(languageSelected({}));
     dispatch(getOut())
     dispatch(getUser({}))
     navigate(`/landing`);
