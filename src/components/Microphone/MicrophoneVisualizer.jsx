@@ -47,20 +47,20 @@ const MicrophoneVisualizer = () => {
   console.log(selectedLanguage);
   const languageActual = Object.keys(selectedLanguage).length && selectedLanguage.code == "es-ES" ? "es-AR" : selectedLanguage.code
 
-  // console.log("selectedLanguage", selectedLanguage);
-  // console.log("listening.length", listening.length);
-  // console.log("listening", listening);
-  // console.log("recording", recording);
-  // console.log("messages", messages);
-  // console.log("finaltranscript", finalTranscript);
-  // console.log("loadingMsgAI", loadingMsg);
+  console.log("selectedLanguage", selectedLanguage);
+  console.log("listening.length", listening.length);
+  console.log("listening", listening);
+  console.log("recording", recording);
+  console.log("messages", messages);
+  console.log("finaltranscript", finalTranscript);
+  console.log("loadingMsgAI", loadingMsg);
 
   useEffect(() => {
     if (wavesurferMicRef.current) {
       wavesurferMicRef.current.destroy();
     }
 
-    if (recording) {
+    if (recording && !endPlan) {
       const wavesurferMic = WaveSurfer.create({
         container: '#waveform',
         waveColor: '#3FB5E4',
@@ -124,7 +124,7 @@ const MicrophoneVisualizer = () => {
 
   useEffect(() => {
     // verifica que esten los datos en localStorage
-    if (!messages || !messages.length) {
+    if (!messages || !messages.length && !endPlan) {
       dispatch(compareMessages())
     }
     if (messages.length && messages[messages.length - 1].type === 'NP_AI' && !endPlan && messages.length == 1) {
