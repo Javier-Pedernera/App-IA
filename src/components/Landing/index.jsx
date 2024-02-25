@@ -4,10 +4,8 @@ import { useState } from "react";
 import { FormControl, InputGroup } from "react-bootstrap";
 import './styles.css';
 import Loader from "../Loader/Loader.jsx";
-import ReactSelect from "react-select";
 import LanguageSelector from "../SelectLanguage/LanguageSelector.jsx";
 import { useSelector } from "react-redux";
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 export default function Landing() {
 
@@ -16,38 +14,8 @@ export default function Landing() {
     const [loading, setLoading] = useState(false);
     const selectedLanguage = useSelector((state) => state.messages.selectedLanguage);
 
-    // useEffect(() => {
-    //     if (finalTranscript !== '' && finalTranscript !== true) {
-    //       SpeechRecognition.stopListening();
-    //       setLoadingMsg(true)
-    //       const userResponse = {
-    //         token: actualUser.tokenUser,
-    //         respuesta: finalTranscript
-    //       }
-    //       const messageUser = { type: 'user', content: finalTranscript, timestamp: new Date().toString() }
-    //       console.log("data de la transcripcion", userResponse);
-    //       dispatch(addMessage(messageUser))
-    //       dispatch(responseUser(userResponse))
-    //       setRecording(false)
-    //       resetTranscript()
-    //       setLoadingMsg(false)
-    //     }
-    //   }, [finalTranscript]);
 
-    const handleVoiceInput = () => {
-        SpeechRecognition.startListening({
-            language: { selectedLanguage },
-            continuous: true,
-            interimResults: true,
-            maxAlternatives: 3,
-            silenceThreshold: 20.0,
-            vad: "aggressive"
-        })
-    }
-    // if (listening == false && recording == true && !endPlan) {
-
-
-
+  
 
     const validateEmail = (email) => {
         // Expresión regular para validar un correo electrónico
@@ -66,7 +34,7 @@ export default function Landing() {
     }
 
     //Spanish (Argentina)
-    console.log(Object.keys(selectedLanguage).length);
+    // console.log(Object.keys(selectedLanguage).length);
     const handleEnterPress = (e) => {
         if (e.key === "Enter") {
             e.preventDefault();
