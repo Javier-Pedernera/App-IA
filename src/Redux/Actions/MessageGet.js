@@ -61,7 +61,7 @@ const responseUser = (data) => {
 			// const msj = { type: 'NP_AI', content: response.message, timestamp: new Date().toString(), thread_id: response.thread_id }
 
 			// usando api OpenAI
-			const response = await axios.post(`${URL}/preguntas`, data);
+			const response = await axios.post(`${URL}/preguntas`, data, { timeout: 30000 });
 			console.log(response);
 			const msj = { type: 'NP_AI', content: response.data.message, timestamp: new Date().toString(), thread_id: response.data.thread_id }
 			console.log(msj);
