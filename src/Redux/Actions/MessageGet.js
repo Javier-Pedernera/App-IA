@@ -2,80 +2,80 @@ import { addMessageToLocalStorage, getMessagesFromLocalStorage } from "../../uti
 import { messageAI, getOut, selectVoice, messageAdded, compare, selectLanguage } from "./MessageSlice";
 import axios from "axios";
 
-const responseUser = (data) => {
-    const URL = import.meta.env.VITE_API_URL;
-    const MAX_RETRY = 3; // Número máximo de intentos
-    let retryCount = 0;
-	console.log(retryCount);
-    const postRequest = async () => {
-        try {
-            const response = await axios.post(`${URL}/preguntas`, data);
-            const msj = { type: 'NP_AI', content: response.data.message, timestamp: new Date().toString(), thread_id: response.data.thread_id };
-            await addMessageToLocalStorage(msj);
-            return msj;
-        } catch (error) {
-            console.error('Error en responseUser:', error);
-            throw error; // Lanzar el error para manejarlo fuera de la función
-        }
-    };
+// const responseUser = (data) => {
+//     const URL = import.meta.env.VITE_API_URL;
+//     const MAX_RETRY = 3; // Número máximo de intentos
+//     let retryCount = 0;
+// 	console.log(retryCount);
+//     const postRequest = async () => {
+//         try {
+//             const response = await axios.post(`${URL}/preguntas`, data);
+//             const msj = { type: 'NP_AI', content: response.data.message, timestamp: new Date().toString(), thread_id: response.data.thread_id };
+//             await addMessageToLocalStorage(msj);
+//             return msj;
+//         } catch (error) {
+//             console.error('Error en responseUser:', error);
+//             throw error; // Lanzar el error para manejarlo fuera de la función
+//         }
+//     };
 
-    const retryPostRequest = async () => {
-        try {
-            const response = await postRequest();
-            return response;
-        } catch (error) {
-            retryCount++;
-            if (retryCount < MAX_RETRY) {
-                console.log(`Intento de reenvío número ${retryCount}.`);
-                return await retryPostRequest(); // Intentar nuevamente
-            } else {
-                console.error('Se excedió el número máximo de intentos.');
-                throw error; // Lanzar el error para manejarlo fuera de la función
-            }
-        }
-    };
+    // const retryPostRequest = async () => {
+    //     try {
+    //         const response = await postRequest();
+    //         return response;
+    //     } catch (error) {
+    //         retryCount++;
+    //         if (retryCount < MAX_RETRY) {
+    //             console.log(`Intento de reenvío número ${retryCount}.`);
+    //             return await retryPostRequest(); // Intentar nuevamente
+    //         } else {
+    //             console.error('Se excedió el número máximo de intentos.');
+    //             throw error; // Lanzar el error para manejarlo fuera de la función
+    //         }
+    //     }
+    // };
 
-    return async (dispatch) => {
-        try {
-            const response = await retryPostRequest();
-            return dispatch(messageAI(response));
-        } catch (error) {
-            console.error('Error en responseUser:', error);
-        }
-    };
-};
+//     return async (dispatch) => {
+//         try {
+//             const response = await retryPostRequest();
+//             return dispatch(messageAI(response));
+//         } catch (error) {
+//             console.error('Error en responseUser:', error);
+//         }
+//     };
+// };
 
 //GET para mostrar los mensajes
-// const responseUser = (data) => {
-// 	const URL = import.meta.env.VITE_API_URL
-// 	// console.log("data en response user", data);
-// 	//comentar al activar ruta 
+const responseUser = (data) => {
+	const URL = import.meta.env.VITE_API_URL
+	// console.log("data en response user", data);
+	//comentar al activar ruta 
 
-// 	return async (dispatch) => {
-// 		try {
+	return async (dispatch) => {
+		try {
 
-// 			//usando simulacion
-// 			// const response = responseApi.data[currentIndex];
-// 			// Incrementa el índice para la próxima llamada comentar cuanactive ruta
-// 			// currentIndex = (currentIndex + 1) % responseApi.data.length;
-// 			// const msj = { type: 'NP_AI', content: response.message, timestamp: new Date().toString(), thread_id: response.thread_id }
+			//usando simulacion
+			// const response = responseApi.data[currentIndex];
+			// Incrementa el índice para la próxima llamada comentar cuanactive ruta
+			// currentIndex = (currentIndex + 1) % responseApi.data.length;
+			// const msj = { type: 'NP_AI', content: response.message, timestamp: new Date().toString(), thread_id: response.thread_id }
 
-// 			// usando api OpenAI
-// 			const response = await axios.post(`${URL}/preguntas`, data);
-// 			console.log(response);
-// 			const msj = { type: 'NP_AI', content: response.data.message, timestamp: new Date().toString(), thread_id: response.data.thread_id }
-// 			console.log(msj);
-// 			await addMessageToLocalStorage(msj)
-// 			return dispatch(messageAI(msj));
+			// usando api OpenAI
+			const response = await axios.post(`${URL}/preguntas`, data);
+			console.log(response);
+			const msj = { type: 'NP_AI', content: response.data.message, timestamp: new Date().toString(), thread_id: response.data.thread_id }
+			console.log(msj);
+			await addMessageToLocalStorage(msj)
+			return dispatch(messageAI(msj));
 
 
 
-// 		} catch (error) {
+		} catch (error) {
 			
-// 			console.error('error en responseUser', error);
-// 		}
-// 	};
-// };
+			console.error('error en responseUser', error);
+		}
+	};
+};
 
 //comparar local storage con estado global
 const compareMessages = () => {
