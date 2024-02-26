@@ -19,17 +19,15 @@ import RecordPlugin from 'wavesurfer.js/dist/plugins/record.esm.js'
 import { getOut } from '../../Redux/Actions/MessageSlice';
 import { getUser } from '../../Redux/Actions/UserSlice';
 import Cookies from 'js-cookie';
+import { useTranslation } from "react-i18next";
 
 const MicrophoneVisualizer = () => {
   const {
-    transcript,
     finalTranscript,
     listening,
-    startListening,
-    stopListening,
     resetTranscript,
-    isMicrophoneAvailable
   } = useSpeechRecognition();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const actualUser = useSelector((state) => state.user.userData);
   const selectedVoice = useSelector((state) => state.messages.selectedVoice);
@@ -150,7 +148,7 @@ const MicrophoneVisualizer = () => {
     Cookies.remove('userEmail');
     localStorage.removeItem('storedMessages');
     localStorage.removeItem("storedMessages");
-    dispatch(languageSelected({}));
+    // dispatch(languageSelected({}));
     dispatch(getOut())
     dispatch(getUser({}))
     navigate(`/landing`);
@@ -200,7 +198,6 @@ const MicrophoneVisualizer = () => {
         // // Esperar a que termine el audio
         wavesurfer.on('finish', () => {
           wavesurfer.destroy();
-          console.log("Audio terminado de reproducir");
           setRecording(true);
         });
         console.log("wavesurfer para ver props", wavesurfer);
@@ -238,20 +235,9 @@ const MicrophoneVisualizer = () => {
               <div id="waveform">{loadingMsg ? <div className='loadercontainer'> <div className="loaderAudio"> </div></div> : null}</div>
             </div>
 
-            {/* {listening ?
-              <Button
-                style={{
-                  width: '40%',
-                  height: 'auto',
-                  margin: "10px",
-                  borderRadius: '5px',
-                  overflow: 'hidden',
-                }} variant="danger" onClick={handleStop} disabled={!listening}>
-                Stop Listening
-              </Button> : <div></div>} */}
             <Button className='btnReset'
               variant="warning" onClick={handleReset}>
-              Abandonar conversación
+              {t("Abandonar")}
             </Button>
 
             <div id="recordings" style={{ margin: '1rem 0' }}></div>

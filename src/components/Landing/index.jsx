@@ -6,6 +6,7 @@ import './styles.css';
 import Loader from "../Loader/Loader.jsx";
 import LanguageSelector from "../SelectLanguage/LanguageSelector.jsx";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 export default function Landing() {
 
@@ -13,9 +14,9 @@ export default function Landing() {
     const [isValidEmail, setValidEmail] = useState(true);
     const [loading, setLoading] = useState(false);
     const selectedLanguage = useSelector((state) => state.messages.selectedLanguage);
+    const { t } = useTranslation();
 
 
-  
 
     const validateEmail = (email) => {
         // Expresión regular para validar un correo electrónico
@@ -59,7 +60,7 @@ export default function Landing() {
                         <InputGroup className="mb-3" style={{ width: "300px", height: "40px" }}>
                             <FormControl
                                 id="emailInput"
-                                placeholder="Ingresa tu correo electronico"
+                                placeholder={t("placeholdercorreo")}
                                 value={username}
                                 onChange={handleUsernameChange}
                                 aria-label="Recipient's username"
@@ -70,10 +71,13 @@ export default function Landing() {
 
                             />
                         </InputGroup>
-                        {!isValidEmail ? <div className="invalidateEmail">"Ingresa un email válido"</div> : <div></div>}
+                        <div className="div_error_email">
+                            {!isValidEmail ? <div className="invalidateEmail">{t("ErrorEmail")}</div> : <div className="invalidateEmail"></div>}
+                        </div>
+
                     </div>
                     <div style={{ marginTop: "30px" }}>
-                        <ButtonLanding dataPlan={dataCreatePlan} setLoader={setLoading} activeButton={Object.keys(selectedLanguage).length} />
+                        <ButtonLanding dataPlan={dataCreatePlan} setLoader={setLoading} activeButton={isValidEmail} />
                     </div>
                     <hr />
                     <LanguageSelector />

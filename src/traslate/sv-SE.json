@@ -1,0 +1,25 @@
+{
+    "startButton": "Börja",
+    "placeholderEmail": "Logga in",
+    "placeholdercorreo": "Ange din e-postadress",
+    "ErrorEmail": "Ange en giltig e-postadress",
+  
+    "titleFAQ": "Vanliga frågor",
+    "FAQ1": "Hur fungerar applikationen?",
+    "resFAQ1": "Applikationen börjar genom att ange din e-post och trycka på knappen 'Börja'. Du kan välja vilken AI-röst du kommer att interagera med. Därefter sker all kommunikation genom röstkommandon, den kommer att ställa frågor om ditt namn, ålder, vikt, osv. När du har slutfört frågeformuläret får du en personlig näringsplan via e-post.",
+  
+    "FAQ2": "Hur kan jag börja använda applikationen?",
+    "resFAQ2": "Välj språk (standardspråket är engelska) och klicka på 'Börja' och svara på de frågor som applikationen kommer att ställa. Följ röstinstruktionerna för att ange den nödvändiga informationen. Se till att ange din e-postadress, eftersom det är avgörande för att ta emot din näringsplan.",
+  
+    "FAQ3": "Hur lång tid tar det att få näringsplanen?",
+    "resFAQ3": "Bearbetningstiden kan variera, men du får vanligtvis din personliga näringsplan när du har slutfört frågeformuläret. Kom ihåg att du måste ange en giltig e-postadress för att ta emot din plan.",
+  
+    "FAQ4": "Vad ska jag göra om AI inte förstår mitt svar eller gör ett misstag?",
+    "resFAQ4": "Om AI inte förstår något av dina svar kan du upprepa det eller tydligt ange vilka data den tog felaktigt. Kommunikation är nyckeln för att säkerställa att vi får korrekt information.",
+    "welcome": "Vi hoppas att du kommer att njuta av att använda NutriPlan! Om du har ytterligare frågor är du välkommen att kontakta oss.",
+  
+    "Abandonar": "Avbryt samtal",
+    "Salir": "Avsluta",
+
+    "Cargando": "Laddar..."
+  }

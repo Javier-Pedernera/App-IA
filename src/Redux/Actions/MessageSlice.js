@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     messages: [],
     selectedVoice: '',
-    selectedLanguage: {}
+    selectedLanguage: { name: "Spanish", code: "es-AR" }
 };
 
 const Slice = createSlice({

@@ -1,0 +1,25 @@
+{
+    "startButton": "Começar",
+    "placeholderEmail": "Entrar",
+    "placeholdercorreo": "Digite seu endereço de email",
+    "ErrorEmail": "Digite um email válido",
+  
+    "titleFAQ": "Perguntas Frequentes",
+    "FAQ1": "Como funciona o aplicativo?",
+    "resFAQ1": "O aplicativo começa inserindo seu e-mail e pressionando o botão 'Começar'. Você pode escolher a voz da AI com a qual interagirá. A partir daí, toda a comunicação será por meio de comandos de voz, ela fará perguntas sobre seu nome, idade, peso, etc. Ao completar o questionário, você receberá um plano nutricional personalizado por e-mail.",
+  
+    "FAQ2": "Como posso começar a usar o aplicativo?",
+    "resFAQ2": "Escolha o idioma (o idioma padrão é inglês) e clique em 'Começar' e responda às perguntas que o aplicativo fará a você. Siga as instruções de voz para fornecer as informações necessárias. Certifique-se de inserir seu endereço de e-mail, pois é crucial para receber seu plano nutricional.",
+  
+    "FAQ3": "Quanto tempo leva para receber o plano nutricional?",
+    "resFAQ3": "O tempo de processamento pode variar, mas geralmente você receberá seu plano nutricional personalizado ao concluir o questionário. Lembre-se de fornecer um endereço de e-mail válido para receber seu plano.",
+  
+    "FAQ4": "O que devo fazer se a AI não entender minha resposta ou cometer um erro?",
+    "resFAQ4": "Se a AI não entender alguma de suas respostas, você pode repeti-la ou indicar claramente quais dados ela interpretou incorretamente. A comunicação é fundamental para garantir que obtenhamos as informações corretas.",
+    "welcome": "Esperamos que você aproveite o uso do NutriPlan! Se tiver mais alguma dúvida, não hesite em nos contatar.",
+  
+    "Abandonar": "Abandonar conversa",
+    "Salir": "Sair",
+
+    "Cargando": "Carregando..."
+  }
