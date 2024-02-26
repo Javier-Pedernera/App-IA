@@ -13,11 +13,13 @@ import Cookies from 'js-cookie';
 import Select from 'react-select'
 import { languageSelected, voiceSelected } from '../../Redux/Actions/MessageGet';
 import LanguageSelector from '../SelectLanguage/LanguageSelector';
-
+import { useTranslation } from "react-i18next";
 const voices = ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer'];
 
 
 const Navbar = () => {
+
+  const { t, i18n } = useTranslation();
   const selectedVoice = useSelector((state) => state.messages.selectedVoice);
   const selectedLanguage = useSelector((state) => state.messages.selectedLanguage);
   const userActive = useSelector((state) => state.user.userData);
@@ -32,7 +34,6 @@ const Navbar = () => {
       dispatch(getUser(user))
     }
   }, [userActive]);
-
 
   const colorStyles = {
     control: (styles, state) => ({
@@ -113,7 +114,6 @@ const Navbar = () => {
     dispatch(getUser({}))
     navigate(`/landing`);
   }
-  console.log(selectedLanguage);
 
   return (
     <nav className="navbar">
@@ -132,11 +132,12 @@ const Navbar = () => {
           />
           <div title="Voz" className='div_ico_voz'><MdVoiceChat className='icono_voz' /></div></div> */}
         <div className='selectDiv'>
-          {Object.keys(userActive).length ?
+          {selectedLanguage.name}
+          {/* {Object.keys(userActive).length ?
             //  <LanguageSelector/>
             <div>{selectedLanguage ? selectedLanguage.name : ""}</div>
             : <div></div>
-          }
+          } */}
 
         </div>
 
@@ -144,7 +145,7 @@ const Navbar = () => {
           <div className='userEmail'>{user}<button title="Salir" onClick={handleOut} className='btn_out'>
             <FaSignOutAlt className='ico_out' /></button></div>
           : <div>
-            <Link to="/" className="navbar__brand"><div className='userEmail'>Ingresa tu email</div></Link> </div>}
+            <Link to="/" className="navbar__brand"><div className='userEmail'>{t("placeholderEmail")}</div></Link> </div>}
       </div>
 
     </nav>

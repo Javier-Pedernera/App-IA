@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
 import { getUserData } from '../../Redux/Actions/UserGet';
 import { addMessage } from '../../Redux/Actions/MessageGet';
-
+import { useTranslation } from "react-i18next";
 export default function ButtonLanding({ dataPlan, setLoader, activeButton }) {
   const actualUser = useSelector((state) => state.user.userData);
   const [isAnimating, setAnimating] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const URL = import.meta.env.VITE_API_URL
   // console.log(isAnimating);
 
@@ -62,7 +63,7 @@ export default function ButtonLanding({ dataPlan, setLoader, activeButton }) {
   }
 
   return (
-    <button className={`btn ${isAnimating ? 'is-animating' : ''} ${activeButton ? '' : 'inactive-button'}`} onClick={handleClick} disabled={!activeButton}>
+    <button id='startButton' className={`btn ${isAnimating ? 'is-animating' : ''} ${activeButton ? '' : 'inactive-button'}`} onClick={handleClick} disabled={!activeButton}>
       {activeButton ? (
         <>
           <span className="dot"></span>
@@ -75,7 +76,7 @@ export default function ButtonLanding({ dataPlan, setLoader, activeButton }) {
           <span className="dot"></span>
         </>
       ) : null}
-      <span className="text">Empezar</span>
+      <span className="text">{t("startButton")}</span>
     </button>
   );
 }

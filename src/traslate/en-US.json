@@ -1,0 +1,25 @@
+{
+  "startButton": "Start",
+  "placeholderEmail": "Sign in",
+  "placeholdercorreo": "Enter your email address",
+  "ErrorEmail": "Enter a valid email",
+
+  "titleFAQ": "Frequently Asked Questions",
+  "FAQ1": "How does the application work?",
+  "resFAQ1": "The application starts by entering your email and pressing the 'Start' button. You can choose the AI voice you will interact with. From there, all communication will be through voice commands, it will ask you questions about your name, age, weight, etc. Upon completing the questionnaire, you will receive a personalized nutritional plan via email.",
+
+  "FAQ2": "How can I start using the application?",
+  "resFAQ2": "Choose the language (the default language is English) and click on 'Start' and answer the questions that the application will ask you. Follow the voice instructions to provide the necessary information. Be sure to enter your email address, as it is crucial to receive your nutritional plan.",
+
+  "FAQ3": "How long does it take to receive the nutritional plan?",
+  "resFAQ3": "The processing time may vary, but you will generally receive your personalized nutritional plan upon completing the questionnaire. Remember that you must provide a valid email address to receive your plan.",
+
+  "FAQ4": "What should I do if the AI ​​does not understand my response or makes a mistake?",
+  "resFAQ4": "If the AI ​​does not understand any of your answers, you can repeat it or clearly indicate which data it took incorrectly. Communication is key to ensuring that we obtain the correct information.",
+  "welcome": "We hope you enjoy using NutriPlan! If you have any further questions, feel free to contact us.",
+
+  "Abandonar": "Abandon conversation",
+  "Salir": "Exit",
+
+  "Cargando": "Loading..."
+}

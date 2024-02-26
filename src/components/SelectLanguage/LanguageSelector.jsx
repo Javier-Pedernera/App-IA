@@ -2,12 +2,13 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { languageSelected } from '../../Redux/Actions/MessageGet';
 import Select from 'react-select';
-
-
+import { useTranslation } from 'react-i18next';
+import i18n from 'i18next';
 
 function LanguageSelector() {
 
   const dispatch = useDispatch()
+  const { t } = useTranslation();
   const languages = [
     { name: "English (US)", code: "en-US" },
     { name: "Swedish", code: "sv-SE" },
@@ -17,7 +18,7 @@ function LanguageSelector() {
   ];
 
   const selectedLanguage = useSelector((state) => state.messages.selectedLanguage);
-  console.log(selectedLanguage);
+
   //Select estilos
   const colorStyles = {
     control: (styles, state) => ({
@@ -89,13 +90,14 @@ function LanguageSelector() {
   // console.log(selectedLanguage);
   const handleLanguageChange = ({ value }) => {
     dispatch(languageSelected(value));
+    i18n.changeLanguage(value.code);
   };
   return (
     <Select
       // isClearable={true}
       isSearchable={true}
       styles={colorStyles}
-      defaultValue={{ value: null, label: 'Idioma' }}
+      defaultValue={{ value: languages[2].code, label: languages[2].name }}
       onChange={handleLanguageChange}
       options={languages.map((language) => ({ label: language.name, value: language }))}
       menuPlacement="bottom"
