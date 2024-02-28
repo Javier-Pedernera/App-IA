@@ -1,6 +1,6 @@
 .allcontent {
   width: 90%;
-  height: 90%;
+  height: 85%;
   overflow-y: auto;
   border: 1px solid #ccc;
   padding: 10px;
@@ -13,20 +13,20 @@
 
 @media screen and (max-width: 710px) {
   .allcontent {
-    width: 95%;
+    width: 90%;
     margin-left: 15px;
     margin-top: inherit;
     height: 55%;
   }
 }
-@media screen and (max-height:900px) {
+/* @media screen and (max-height:900px) {
   .allcontent {
     height: 60%;
   }
-}
+} */
 @media screen and (min-width: 700px) and (max-width: 830px) {
   .allcontent {
-    height: 90%;
+    height: 88%;
   }
 }
 @media screen and (min-width: 640px) and (max-width: 710px) {
